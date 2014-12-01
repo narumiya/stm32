@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<History> 
+  <File usedCount="2" path="cmsis_lib/include/stm32f4xx_spi.h"/>  
+  <File usedCount="2" path="cmsis_lib/include/stm32f4xx_i2c.h"/>  
+  <File usedCount="2" path="cmsis_lib/include/stm32f4xx_dac.h"/>  
+  <File usedCount="2" path="cmsis_lib/include/stm32f4xx_syscfg.h"/>  
+  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_syscfg.c"/>  
+  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_dac.c"/>  
+  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_i2c.c"/>  
+  <File usedCount="2" path="cmsis_lib/source/stm32f4xx_spi.c"/>
+</History>

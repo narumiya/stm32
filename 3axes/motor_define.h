@@ -1,0 +1,378 @@
+#ifndef MOTOR_DEFINE
+#define MOTOR_DEFINE
+
+//#define LEFT_MOTOR 	3
+#define LEFT_MOTOR 	5
+#define RIGHT_MOTOR 1
+#define BACK_MOTOR 	7
+#define ARM_MOTOR		10
+
+#if LEFT_MOTOR == 1
+	#define LEFT_TIRE_PWM_TIM		TIM3
+	#define LEFT_TIRE_PWM_CH		4
+	#define LEFT_TIRE_PWM_PORT	GPIOB
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_1
+	#define LEFT_TIRE_PORT_CW		GPIOA
+	#define LEFT_TIRE_CW					GPIO_Pin_7
+	#define LEFT_TIRE_PORT_CCW	GPIOC
+	#define LEFT_TIRE_CCW				GPIO_Pin_4
+
+#elif LEFT_MOTOR == 2
+	#define LEFT_TIRE_PWM_TIM		TIM8
+	#define LEFT_TIRE_PWM_CH		2
+	#define LEFT_TIRE_PWM_PORT	GPIOB
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_0
+	#define LEFT_TIRE_PORT_CW		GPIOA
+	#define LEFT_TIRE_CW					GPIO_Pin_6
+	#define LEFT_TIRE_PORT_CCW	GPIOC
+	#define LEFT_TIRE_CCW				GPIO_Pin_5
+
+#elif LEFT_MOTOR == 3
+	#define LEFT_TIRE_PWM_TIM		TIM1
+	#define LEFT_TIRE_PWM_CH		1
+	#define LEFT_TIRE_PWM_PORT	GPIOE
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_9
+	#define LEFT_TIRE_PORT_CW		GPIOE
+	#define LEFT_TIRE_CW					GPIO_Pin_5
+	#define LEFT_TIRE_PORT_CCW	GPIOE
+	#define LEFT_TIRE_CCW				GPIO_Pin_11
+
+#elif LEFT_MOTOR == 5
+	#define LEFT_TIRE_PWM_TIM		TIM1
+	#define LEFT_TIRE_PWM_CH		1
+	#define LEFT_TIRE_PWM_PORT	GPIOE
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_8
+	#define LEFT_TIRE_PORT_CCW	GPIOE
+	#define LEFT_TIRE_CCW				GPIO_Pin_10
+	#define LEFT_TIRE_PORT_CW		GPIOB
+	#define LEFT_TIRE_CW					GPIO_Pin_2
+
+#elif LEFT_MOTOR == 6
+	#define LEFT_TIRE_PWM_TIM		TIM1
+	#define LEFT_TIRE_PWM_CH		3
+	#define LEFT_TIRE_PWM_PORT	GPIOE
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_12
+	#define LEFT_TIRE_PORT_CW		GPIOE
+	#define LEFT_TIRE_CW					GPIO_Pin_6
+	#define LEFT_TIRE_PORT_CCW	GPIOE
+	#define LEFT_TIRE_CCW				GPIO_Pin_7
+
+#elif LEFT_MOTOR == 7
+	#define LEFT_TIRE_PWM_TIM		TIM1
+	#define LEFT_TIRE_PWM_CH		4
+	#define LEFT_TIRE_PWM_PORT	GPIOE
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_14
+	#define LEFT_TIRE_PORT_CW		GPIOB
+	#define LEFT_TIRE_CW					GPIO_Pin_10
+	#define LEFT_TIRE_PORT_CCW	GPIOB
+	#define LEFT_TIRE_CCW				GPIO_Pin_12
+
+#elif LEFT_MOTOR == 8
+	#define LEFT_TIRE_PWM_TIM		TIM1
+	#define LEFT_TIRE_PWM_CH		3
+	#define LEFT_TIRE_PWM_PORT	GPIOE
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_13
+	#define LEFT_TIRE_PORT_CW		GPIOE
+	#define LEFT_TIRE_CW					GPIO_Pin_0
+	#define LEFT_TIRE_PORT_CCW	GPIOE
+	#define LEFT_TIRE_CCW				GPIO_Pin_15
+
+#elif LEFT_MOTOR == 9
+	#define LEFT_TIRE_PWM_TIM		TIM2
+	#define LEFT_TIRE_PWM_CH		4
+	#define LEFT_TIRE_PWM_PORT	GPIOB
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_11
+	#define LEFT_TIRE_PORT_CW		GPIOB
+	#define LEFT_TIRE_CW					GPIO_Pin_13
+	#define LEFT_TIRE_PORT_CCW	GPIOD
+	#define LEFT_TIRE_CCW				GPIO_Pin_10
+
+#elif LEFT_MOTOR == 10
+	#define LEFT_TIRE_PWM_TIM		TIM1
+	#define LEFT_TIRE_PWM_CH		2
+	#define LEFT_TIRE_PWM_PORT	GPIOB
+	#define LEFT_TIRE_PWM_PIN		GPIO_Pin_14
+	#define LEFT_TIRE_PORT_CW		GPIOB
+	#define LEFT_TIRE_CW					GPIO_Pin_15
+	#define LEFT_TIRE_PORT_CCW	GPIOD
+	#define LEFT_TIRE_CCW				GPIO_Pin_11
+
+#endif
+
+#if RIGHT_MOTOR == 1
+	#define RIGHT_TIRE_PWM_TIM	TIM3
+	#define RIGHT_TIRE_PWM_CH		4
+	#define RIGHT_TIRE_PWM_PORT	GPIOB
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_1
+	#define RIGHT_TIRE_PORT_CW	GPIOC
+	#define RIGHT_TIRE_CW				GPIO_Pin_4
+	#define RIGHT_TIRE_PORT_CCW	GPIOA
+	#define RIGHT_TIRE_CCW			GPIO_Pin_7
+
+#elif RIGHT_MOTOR == 2
+	#define RIGHT_TIRE_PWM_TIM	TIM8
+	#define RIGHT_TIRE_PWM_CH		2
+	#define RIGHT_TIRE_PWM_PORT	GPIOB
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_0
+	#define RIGHT_TIRE_PORT_CW	GPIOA
+	#define RIGHT_TIRE_CW				GPIO_Pin_6
+	#define RIGHT_TIRE_PORT_CCW	GPIOC
+	#define RIGHT_TIRE_CCW			GPIO_Pin_5
+
+#elif RIGHT_MOTOR == 3
+	#define RIGHT_TIRE_PWM_TIM	TIM1
+	#define RIGHT_TIRE_PWM_CH		1
+	#define RIGHT_TIRE_PWM_PORT	GPIOE
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_9
+	#define RIGHT_TIRE_PORT_CW	GPIOE
+	#define RIGHT_TIRE_CW				GPIO_Pin_11
+	#define RIGHT_TIRE_PORT_CCW	GPIOE
+	#define RIGHT_TIRE_CCW			GPIO_Pin_5
+
+#elif RIGHT_MOTOR == 5
+	#define RIGHT_TIRE_PWM_TIM	TIM1
+	#define RIGHT_TIRE_PWM_CH		1
+	#define RIGHT_TIRE_PWM_PORT	GPIOE
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_8
+	#define RIGHT_TIRE_PORT_CW	GPIOE
+	#define RIGHT_TIRE_CW				GPIO_Pin_10
+	#define RIGHT_TIRE_PORT_CCW	GPIOB
+	#define RIGHT_TIRE_CCW			GPIO_Pin_2
+
+#elif RIGHT_MOTOR == 6
+	#define RIGHT_TIRE_PWM_TIM	TIM1
+	#define RIGHT_TIRE_PWM_CH		3
+	#define RIGHT_TIRE_PWM_PORT	GPIOE
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_12
+	#define RIGHT_TIRE_PORT_CW	GPIOE
+	#define RIGHT_TIRE_CW				PIO_Pin_6
+	#define RIGHT_TIRE_PORT_CCW	GPIOE
+	#define RIGHT_TIRE_CCW			GPIO_Pin_7
+
+#elif RIGHT_MOTOR == 7
+	#define RIGHT_TIRE_PWM_TIM	TIM1
+	#define RIGHT_TIRE_PWM_CH		4
+	#define RIGHT_TIRE_PWM_PORT	GPIOE
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_14
+	#define RIGHT_TIRE_PORT_CW	GPIOB
+	#define RIGHT_TIRE_CW				GPIO_Pin_10
+	#define RIGHT_TIRE_PORT_CCW	GPIOB
+	#define RIGHT_TIRE_CCW			GPIO_Pin_12
+
+#elif RIGHT_MOTOR == 8
+	#define RIGHT_TIRE_PWM_TIM	TIM1
+	#define RIGHT_TIRE_PWM_CH		3
+	#define RIGHT_TIRE_PWM_PORT	GPIOE
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_13
+	#define RIGHT_TIRE_PORT_CW	GPIOE
+	#define RIGHT_TIRE_CW				GPIO_Pin_0
+	#define RIGHT_TIRE_PORT_CCW	GPIOE
+	#define RIGHT_TIRE_CCW			GPIO_Pin_15
+
+#elif RIGHT_MOTOR == 9
+	#define RIGHT_TIRE_PWM_TIM	TIM2
+	#define RIGHT_TIRE_PWM_CH		4
+	#define RIGHT_TIRE_PWM_PORT	GPIOB
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_11
+	#define RIGHT_TIRE_PORT_CW	GPIOB
+	#define RIGHT_TIRE_CW				GPIO_Pin_13
+	#define RIGHT_TIRE_PORT_CCW	GPIOD
+	#define RIGHT_TIRE_CCW			GPIO_Pin_10
+
+#elif RIGHT_MOTOR == 10
+	#define RIGHT_TIRE_PWM_TIM	TIM1
+	#define RIGHT_TIRE_PWM_CH		2
+	#define RIGHT_TIRE_PWM_PORT	GPIOB
+	#define RIGHT_TIRE_PWM_PIN	GPIO_Pin_14
+	#define RIGHT_TIRE_PORT_CW	GPIOB
+	#define RIGHT_TIRE_CW				GPIO_Pin_15
+	#define RIGHT_TIRE_PORT_CCW	GPIOD
+	#define RIGHT_TIRE_CCW			GPIO_Pin_11
+
+#endif
+
+#if BACK_MOTOR == 1
+	#define BACK_TIRE_PWM_TIM		TIM3
+	#define BACK_TIRE_PWM_CH		4
+	#define BACK_TIRE_PWM_PORT	GPIOB
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_1
+	#define BACK_TIRE_PORT_CW		GPIOA
+	#define BACK_TIRE_CW				GPIO_Pin_7
+	#define BACK_TIRE_PORT_CCW	GPIOC
+	#define BACK_TIRE_CCW				GPIO_Pin_4
+
+#elif BACK_MOTOR == 2
+	#define BACK_TIRE_PWM_TIM		TIM8
+	#define BACK_TIRE_PWM_CH		2
+	#define BACK_TIRE_PWM_PORT	GPIOB
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_0
+	#define BACK_TIRE_PORT_CW		GPIOA
+	#define BACK_TIRE_CW				GPIO_Pin_6
+	#define BACK_TIRE_PORT_CCW	GPIOC
+	#define BACK_TIRE_CCW				GPIO_Pin_5
+
+#elif BACK_MOTOR == 3
+	#define BACK_TIRE_PWM_TIM		TIM1
+	#define BACK_TIRE_PWM_CH		1
+	#define BACK_TIRE_PWM_PORT	GPIOE
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_9
+	#define BACK_TIRE_PORT_CW		GPIOE
+	#define BACK_TIRE_CW				GPIO_Pin_11
+	#define BACK_TIRE_PORT_CCW	GPIOE
+	#define BACK_TIRE_CCW				GPIO_Pin_5
+
+#elif BACK_MOTOR == 5
+	#define BACK_TIRE_PWM_TIM		TIM1
+	#define BACK_TIRE_PWM_CH		1
+	#define BACK_TIRE_PWM_PORT	GPIOE
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_8
+	#define BACK_TIRE_PORT_CW		GPIOE
+	#define BACK_TIRE_CW				GPIO_Pin_10
+	#define BACK_TIRE_PORT_CCW	GPIOB
+	#define BACK_TIRE_CCW				GPIO_Pin_2
+
+#elif BACK_MOTOR == 6
+	#define BACK_TIRE_PWM_TIM		TIM1
+	#define BACK_TIRE_PWM_CH		3
+	#define BACK_TIRE_PWM_PORT	GPIOE
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_12
+	#define BACK_TIRE_PORT_CW		GPIOE
+	#define BACK_TIRE_CW				GPIO_Pin_6
+	#define BACK_TIRE_PORT_CCW	GPIOE
+	#define BACK_TIRE_CCW				GPIO_Pin_7
+
+#elif BACK_MOTOR == 7
+	#define BACK_TIRE_PWM_TIM		TIM1
+	#define BACK_TIRE_PWM_CH		4
+	#define BACK_TIRE_PWM_PORT	GPIOE
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_14
+	#define BACK_TIRE_PORT_CW		GPIOB
+	#define BACK_TIRE_CW				GPIO_Pin_12
+	#define BACK_TIRE_PORT_CCW	GPIOB
+	#define BACK_TIRE_CCW				GPIO_Pin_10
+
+#elif BACK_MOTOR == 8
+	#define BACK_TIRE_PWM_TIM		TIM1
+	#define BACK_TIRE_PWM_CH		3
+	#define BACK_TIRE_PWM_PORT	GPIOE
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_13
+	#define BACK_TIRE_PORT_CW		GPIOE
+	#define BACK_TIRE_CW				GPIO_Pin_0
+	#define BACK_TIRE_PORT_CCW	GPIOE
+	#define BACK_TIRE_CCW				GPIO_Pin_15
+
+#elif BACK_MOTOR == 9
+	#define BACK_TIRE_PWM_TIM		TIM2
+	#define BACK_TIRE_PWM_CH		4
+	#define BACK_TIRE_PWM_PORT	GPIOB
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_11
+	#define BACK_TIRE_PORT_CW		GPIOB
+	#define BACK_TIRE_CW				GPIO_Pin_13
+	#define BACK_TIRE_PORT_CCW	GPIOD
+	#define BACK_TIRE_CCW				GPIO_Pin_10
+
+#elif BACK_MOTOR == 10
+	#define BACK_TIRE_PWM_TIM		TIM1
+	#define BACK_TIRE_PWM_CH		2
+	#define BACK_TIRE_PWM_PORT	GPIOB
+	#define BACK_TIRE_PWM_PIN		GPIO_Pin_14
+	#define BACK_TIRE_PORT_CW		GPIOB
+	#define BACK_TIRE_CW				GPIO_Pin_15
+	#define BACK_TIRE_PORT_CCW	GPIOD
+	#define BACK_TIRE_CCW				GPIO_Pin_11
+
+#endif
+
+#if ARM_MOTOR == 1
+	#define ARM_PWM_TIM			TIM3
+	#define ARM_PWM_CH			4
+	#define ARM_PWM_PORT		GPIOB
+	#define ARM_PWM_PIN			GPIO_Pin_1
+	#define ARM_PORT_PUSH		GPIOA
+	#define ARM_PUSH				GPIO_Pin_7
+	#define ARM_PORT_PULL		GPIOC
+	#define ARM_PULL					GPIO_Pin_4
+
+#elif ARM_MOTOR == 2
+	#define ARM_PWM_TIM			TIM8
+	#define ARM_PWM_CH			2
+	#define ARM_PWM_PORT		GPIOB
+	#define ARM_PWM_PIN			GPIO_Pin_0
+	#define ARM_PORT_PUSH		GPIOA
+	#define ARM_PUSH				GPIO_Pin_6
+	#define ARM_PORT_PULL		GPIOC
+	#define ARM_PULL					GPIO_Pin_5
+
+#elif ARM_MOTOR == 3
+	#define ARM_PWM_TIM			TIM1
+	#define ARM_PWM_CH			1
+	#define ARM_PWM_PORT		GPIOE
+	#define ARM_PWM_PIN			GPIO_Pin_9
+	#define ARM_PORT_PUSH		GPIOE
+	#define ARM_PUSH				GPIO_Pin_11
+	#define ARM_PORT_PULL		GPIOE
+	#define ARM_PULL					GPIO_Pin_5
+
+#elif ARM_MOTOR == 5
+	#define ARM_PWM_TIM			TIM1
+	#define ARM_PWM_CH			1
+	#define ARM_PWM_PORT		GPIOE
+	#define ARM_PWM_PIN			GPIO_Pin_8
+	#define ARM_PORT_PUSH		GPIOE
+	#define ARM_PUSH				GPIO_Pin_10
+	#define ARM_PORT_PULL		GPIOB
+	#define ARM_PULL					GPIO_Pin_2
+
+#elif ARM_MOTOR == 6
+	#define ARM_PWM_TIM			TIM1
+	#define ARM_PWM_CH			3
+	#define ARM_PWM_PORT		GPIOE
+	#define ARM_PWM_PIN			GPIO_Pin_12
+	#define ARM_PORT_PUSH		GPIOE
+	#define ARM_PUSH				GPIO_Pin_6
+	#define ARM_PORT_PULL		GPIOE
+	#define ARM_PULL					GPIO_Pin_7
+
+#elif ARM_MOTOR == 7
+	#define ARM_PWM_TIM			TIM1
+	#define ARM_PWM_CH			4
+	#define ARM_PWM_PORT		GPIOE
+	#define ARM_PWM_PIN			GPIO_Pin_14
+	#define ARM_PORT_PUSH		GPIOB
+	#define ARM_PUSH				GPIO_Pin_12
+	#define ARM_PORT_PULL		GPIOB
+	#define ARM_PULL					GPIO_Pin_10
+
+#elif ARM_MOTOR == 8
+	#define ARM_PWM_TIM			TIM1
+	#define ARM_PWM_CH			3
+	#define ARM_PWM_PORT		GPIOE
+	#define ARM_PWM_PIN			GPIO_Pin_13
+	#define ARM_PORT_PUSH		GPIOE
+	#define ARM_PUSH				GPIO_Pin_0
+	#define ARM_PORT_PULL		GPIOE
+	#define ARM_PULL					GPIO_Pin_15
+
+#elif ARM_MOTOR == 9
+	#define ARM_PWM_TIM			TIM2
+	#define ARM_PWM_CH			4
+	#define ARM_PWM_PORT		GPIOB
+	#define ARM_PWM_PIN			GPIO_Pin_11
+	#define ARM_PORT_PUSH		GPIOB
+	#define ARM_PUSH				GPIO_Pin_13
+	#define ARM_PORT_PULL		GPIOD
+	#define ARM_PULL					GPIO_Pin_10
+
+#elif ARM_MOTOR == 10
+	#define ARM_PWM_TIM			TIM1
+	#define ARM_PWM_CH			2
+	#define ARM_PWM_PORT		GPIOB
+	#define ARM_PWM_PIN			GPIO_Pin_14
+	#define ARM_PORT_PUSH		GPIOD
+	#define ARM_PUSH				GPIO_Pin_11
+	#define ARM_PORT_PULL		GPIOB
+	#define ARM_PULL					GPIO_Pin_15
+
+#endif
+
+#endif

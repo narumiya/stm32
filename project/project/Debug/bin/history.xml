@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -g -nostartfiles -Map=project.map -O0 --gc-sections -lm -lgcc -lc -LC:\CooCox\CoIDE\configuration\ProgramData\project -TC:\CooCox\CoIDE\configuration\ProgramData\project/link.ld -g -L..\..\..\STM32DiscoveryVCP-master\STM32F4-Discovery -lpdmfilter_gcc -L..\..\..\STM32F4\STM32F4xx_StdFramework\CMSIS\DSP_Lib -ldsp_sf_vr142">
+      <target file="project.elf" lastModified="149c6cb3eb7">
+         <source file="..\..\..\STM32F4\STM32F4xx_StdFramework\CMSIS\DSP_Lib\libdsp_sf_vr142.a" lastModified="14563ace370"/>
+         <source file="..\obj\stm32f4xx_syscfg.o" lastModified="149b96e80e7"/>
+         <source file="..\obj\usb_core.o" lastModified="149b96e8193"/>
+         <source file="..\obj\stm32f4xx_sdio.o" lastModified="149b96e825e"/>
+         <source file="..\obj\Config_port.o" lastModified="149c6630467"/>
+         <source file="..\obj\init_STM32F4.o" lastModified="149b96e8512"/>
+         <source file="..\obj\usbd_usr.o" lastModified="149b96e8560"/>
+         <source file="..\obj\stm32f4xx_usart.o" lastModified="149b96e861c"/>
+         <source file="..\obj\stm32f4xx_pwr.o" lastModified="149b96e866a"/>
+         <source file="..\obj\GPIO_ki.o" lastModified="149b96e86a8"/>
+         <source file="..\obj\stm32f4xx_can.o" lastModified="149b96e8716"/>
+         <source file="..\obj\startup_stm32f4xx.o" lastModified="149b96e8745"/>
+         <source file="..\obj\stm32f4xx_crc.o" lastModified="149b96e8793"/>
+         <source file="..\obj\usbd_core.o" lastModified="149b96e886e"/>
+         <source file="..\obj\main.o" lastModified="149c6cb3b1e"/>
+         <source file="..\obj\stm32f4xx_rcc.o" lastModified="149b96e89d5"/>
+         <source file="..\obj\stm32f4xx_adc.o" lastModified="149b96e8a42"/>
+         <source file="..\obj\usbd_desc.o" lastModified="149b96e8aa0"/>
+         <source file="..\obj\my_standard_io_ver_2.o" lastModified="149b96e8afe"/>
+         <source file="..\obj\usb_communication.o" lastModified="149b96e8b4c"/>
+         <source file="..\obj\stm32f4xx_fsmc.o" lastModified="149b96e8be8"/>
+         <source file="..\obj\stm32f4xx_gpio.o" lastModified="149b96e8c36"/>
+         <source file="..\obj\stm32f4xx_flash.o" lastModified="149b96e8e1b"/>
+         <source file="..\obj\usbd_cdc_vcp.o" lastModified="149b96e8f73"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="149b96e8fe0"/>
+         <source file="..\obj\syscalls.o" lastModified="149b96e903e"/>
+         <source file="..\obj\stm32f4xx_dma.o" lastModified="149b96e90ab"/>
+         <source file="..\obj\usb_bsp.o" lastModified="149b96e9109"/>
+         <source file="..\obj\usbd_req.o" lastModified="149b96e9186"/>
+         <source file="..\obj\usb_dcd_int.o" lastModified="149b96e91f3"/>
+         <source file="..\obj\usbd_cdc_core.o" lastModified="149b96e9261"/>
+         <source file="..\obj\stm32f4xx_spi.o" lastModified="149b96e92de"/>
+         <source file="..\obj\stm32f4xx_i2c.o" lastModified="149b96e934b"/>
+         <source file="..\obj\stm32f4xx_exti.o" lastModified="149b96e93a9"/>
+         <source file="..\obj\name_converter.o" lastModified="149b96e9426"/>
+         <source file="..\obj\misc.o" lastModified="149b96e9484"/>
+         <source file="..\obj\usb_dcd.o" lastModified="149b96e954f"/>
+         <source file="..\obj\usbd_ioreq.o" lastModified="149b96e95bc"/>
+         <source file="..\obj\stm32f4xx_tim.o" lastModified="149b96e9668"/>
+      </target>
+   </processor>
+</history>
