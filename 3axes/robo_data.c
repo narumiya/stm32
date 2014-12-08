@@ -550,8 +550,8 @@ void get_robot_inf( robot_information_t *robot )
 	old_enc_dis_r = enc_dis_r;
 	old_enc_dis_l = enc_dis_l;
 
-	velocity_x = ( robot->coord.c_x - old_x ) / INTERRUPT_TIME;
-	velocity_y = ( robot->coord.c_y - old_y ) / INTERRUPT_TIME;
+	velocity_x = (( robot->coord.c_x - old_x ) / (INTERRUPT_TIME / 1000));
+	velocity_y = (( robot->coord.c_y - old_y ) / (INTERRUPT_TIME / 1000));
 
 	robot->velocity.velocity	= sqrt( ( velocity_x * velocity_x ) + ( velocity_y * velocity_y ) );
 	robot->velocity.angular_velocity = ( revision_degree(robot->angle.degree - old_degree) ) / INTERRUPT_TIME;

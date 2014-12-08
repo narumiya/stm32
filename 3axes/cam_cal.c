@@ -36,8 +36,8 @@ void cam_data(target_cam_t *target_cam, robot_information_t *robot)
 
 		}else{
 			GPIO_ResetBits(GPIOD,  GPIO_Pin_14);
-			target_cam->x = OVER_CAM_HIGH * tan(D_TO_R(90 - CAM_ANGLR_RANGE - (target_cam->over_y / 6))) + OVER_CAM_POSI_X;
-			target_cam->y = ( (HALF_PC_PICTURE_X - target_cam->over_x ) / (HALF_PC_PICTURE_X ) ) * (target_cam->x / 2) + OVER_CAM_POSI_Y;
+			target_cam->x = OVER_CAM_HIGH * tan(D_TO_R(90 - CAM_ANGLR_RANGE - (target_cam->under_y / 6))) + UNDER_CAM_POSI_X;
+			target_cam->y = ( (HALF_PC_PICTURE_X - target_cam->under_x ) / (HALF_PC_PICTURE_X ) ) * (target_cam->x / 2) + UNDER_CAM_POSI_Y;
 		}
 	}
 

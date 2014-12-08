@@ -1,8 +1,8 @@
 #ifndef CAM_CAL_H
 #define CAM_CAL_H
 
-#define UNDER_CAM_HIGH		120.0
-#define OVER_CAM_HIGH			300.0
+#define UNDER_CAM_HIGH		110.0
+#define OVER_CAM_HIGH			260.0
 
 #define CAM_ANGLR_RANGE	15.0//’PˆÊ(“x)
 

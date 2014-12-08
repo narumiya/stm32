@@ -34,10 +34,10 @@ void all_config(void)
 	Init_SysTick(0.001);					//1ms割り込み
 	//Init_micro_interrupt(TIM2);		//1us割り込み
 	Init_ADC1(POTENTIO);
-	Init_PWM(LEFT_TIRE_PWM_TIM, LEFT_TIRE_PWM_PORT, LEFT_TIRE_PWM_PIN, 10000);				//左タイヤモーター
-	Init_PWM(RIGHT_TIRE_PWM_TIM, RIGHT_TIRE_PWM_PORT, RIGHT_TIRE_PWM_PIN, 10000);		//右タイヤモーター
-	Init_PWM(BACK_TIRE_PWM_TIM, BACK_TIRE_PWM_PORT, BACK_TIRE_PWM_PIN, 10000);			//後ろタイヤモーター
-	Init_PWM(ARM_PWM_TIM, ARM_PWM_PORT, ARM_PWM_PIN, 10000);												//アームモーター
+	Init_PWM(RIGHT_TIRE_PWMSET, 10000);				//左タイヤモーター
+	Init_PWM(LEFT_TIRE_PWMSET, 10000);		//右タイヤモーター
+	Init_PWM(BACK_TIRE_PWMSET, 10000);			//後ろタイヤモーター
+	Init_PWM(ARM_PWMSET, 10000);												//アームモーター
 	//Init_USART(USART2, 115200, GPIOD, GPIO_Pin_5, GPIOD, GPIO_Pin_6);
 	Init_USART(USART3, 115200, GPIOD, GPIO_Pin_8, GPIOD, GPIO_Pin_9);
 	//Init_encoder(TIM4, GPIOB, GPIO_Pin_6 | GPIO_Pin_7);	//左エンコ
@@ -52,16 +52,16 @@ void port_config(void)
 	Init_port(GPIO_Mode_IN, START_PORT, GPIO_PuPd_DOWN, GPIO_OType_PP);//スタートスイッチ
 	Init_port(GPIO_Mode_IN, LIMIT_PORT, GPIO_PuPd_NOPULL, GPIO_OType_PP);//リミットスイッチ
 	Init_port(GPIO_Mode_OUT, BUZZER, GPIO_PuPd_UP, GPIO_OType_PP);//buzzer
-	//Init_port(GPIO_Mode_OUT, ENC_RESET, GPIO_PuPd_UP, GPIO_OType_PP);//エンコーダリセットポート
+	Init_port(GPIO_Mode_OUT, ENC_RESET, GPIO_PuPd_UP, GPIO_OType_PP);//エンコーダリセットポート
 
-	Init_port(GPIO_Mode_OUT, RIGHT_TIRE_PORT_CCW, RIGHT_TIRE_CCW, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, RIGHT_TIRE_PORT_CW, RIGHT_TIRE_CW, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, LEFT_TIRE_PORT_CCW, LEFT_TIRE_CCW, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, LEFT_TIRE_PORT_CW, LEFT_TIRE_CW, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, BACK_TIRE_PORT_CCW, BACK_TIRE_CCW, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, BACK_TIRE_PORT_CW, BACK_TIRE_CW, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, ARM_PORT_PUSH, ARM_PUSH, GPIO_PuPd_UP, GPIO_OType_PP);
-	Init_port(GPIO_Mode_OUT, ARM_PORT_PULL, ARM_PULL, GPIO_PuPd_UP, GPIO_OType_PP);
+	Init_port(GPIO_Mode_OUT, RIGHT_TIRE_CWSET);
+	Init_port(GPIO_Mode_OUT, RIGHT_TIRE_CCWSET);
+	Init_port(GPIO_Mode_OUT, LEFT_TIRE_CWSET);
+	Init_port(GPIO_Mode_OUT, LEFT_TIRE_CCWSET);
+	Init_port(GPIO_Mode_OUT, BACK_TIRE_CWSET);
+	Init_port(GPIO_Mode_OUT, BACK_TIRE_CCWSET);
+	Init_port(GPIO_Mode_OUT, ARM_PUSHSET);
+	Init_port(GPIO_Mode_OUT, ARM_PULLSET);
 	//Init_port(GPIO_Mode_OUT,TRIG, GPIO_PuPd_UP, GPIO_OType_PP);	//超音波
 	//Init_port(GPIO_Mode_IN, ECOH, GPIO_PuPd_NOPULL, GPIO_OType_PP);//超音波
 }
@@ -83,7 +83,8 @@ int main(void)
 #endif
 
 	float		straight = 0.00,
-				add_output = 0.00;
+				add_output = 0.00,
+				old_velocity = 0.00;
 
 	unsigned short	start_sw = 0,
 								task = 0,
@@ -106,7 +107,7 @@ int main(void)
     		reset_count_time(0);
 
     		get_robot_inf( &robot );
-    		//arm_length(&robot);
+    		arm_length(&robot);
     		start_sw = positive_chattering(START_SW,0);
 
 			if( start_sw == EDGE_DOWN ){
@@ -157,7 +158,7 @@ int main(void)
 					#endif
 					target.angle.degree = get_target_degree( target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
 					target.distance.vertical = get_vertical_distance(target.angle.degree, target.distance.between_two_points);
-					target.velocity.velocity = get_target_velocity(target.distance.between_two_points, target.distance.vertical, 5.0, 15.0, 30.0);
+					target.velocity.velocity = get_target_velocity(target.distance.between_two_points, target.distance.vertical, 500.0, 400.0, 110.0);
 					//straight = pd_straight(target.distance.between_two_points);
 					straight = pd_straight(target.velocity.velocity - robot.velocity.velocity);
 					motor.x = get_motor_output_x(straight + add_output, target.angle.degree);
@@ -179,6 +180,7 @@ int main(void)
 					}
 					//ストーン検知したが押せる範囲にはいってない
 				}else{
+					move_arm(pd_arm_rock(robot.arm_dis, 0, ROCK_P_ARMGAIN, ROCK_D_ARMGAIN));
 					task_flag = 0;
 					target.coord.c_x = robot.coord.c_x;
 					target.coord.c_y = target_cam.y + robot.coord.c_y;
@@ -202,7 +204,7 @@ int main(void)
 					#endif
 					target.angle.degree = get_target_degree( target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
 					target.distance.vertical = get_vertical_distance( target.angle.degree, target.distance.between_two_points );
-					target.velocity.velocity = get_target_velocity( target.distance.between_two_points, target.distance.vertical, 5.0, 15.0, 30.0);
+					target.velocity.velocity = get_target_velocity( target.distance.between_two_points, target.distance.vertical, 500.0, 400.0, 110.0);
 					//straight = pd_straight(target.distance.between_two_points);
 					straight = pd_straight( target.velocity.velocity - robot.velocity.velocity);
 					motor.x = get_motor_output_x(straight + add_output, target.angle.degree);
@@ -217,6 +219,7 @@ int main(void)
 					target.coord.c_y = target_cam.y + robot.coord.c_y + 5.0 * sin(D_TO_R(target.angle.degree));
 					flag = 1;
 				}
+				move_arm(pd_arm_rock(robot.arm_dis, 150, ROCK_P_ARMGAIN, ROCK_D_ARMGAIN));
 				debug_task = 3;
 				target.distance.between_two_points = get_twopoints_distance( target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
 				target.angle.degree = get_target_degree( target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
@@ -230,7 +233,7 @@ int main(void)
 					add_output = 0.00;
 				#endif
 				target.distance.vertical = get_vertical_distance( target.angle.degree, target.distance.between_two_points );
-				target.velocity.velocity = get_target_velocity( target.distance.between_two_points, target.distance.vertical, 5.0, 15.0, 30.0);
+				target.velocity.velocity = get_target_velocity( target.distance.between_two_points, target.distance.vertical, 500.0, 400.0, 110.0);
 				//straight = pd_straight(target.distance.between_two_points);
 				straight = pd_straight(target.velocity.velocity - robot.velocity.velocity);
 				motor.x = get_motor_output_x(straight + add_output, target.angle.degree);
@@ -245,7 +248,7 @@ int main(void)
 			break;
 			case 2:
 				if(flag == 1){
-					target.coord.c_x = robot.old_coord.c_x - 280.0;
+					target.coord.c_x = robot.old_coord.c_x - 200.0;
 					target.coord.c_y = robot.old_coord.c_y;
 					flag = 2;
 				}
@@ -255,7 +258,7 @@ int main(void)
 				target.distance.between_two_points = get_twopoints_distance( target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
 				target.angle.degree = get_target_degree(target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
 				target.distance.vertical = get_vertical_distance(target.angle.degree, target.distance.between_two_points );
-				target.velocity.velocity = get_target_velocity(target.distance.between_two_points, target.distance.vertical, 1000.0, 1000.0, 150.0);
+				target.velocity.velocity = get_target_velocity(target.distance.between_two_points, target.distance.vertical, 1000.0, 1000.0, 500.0);
 				//straight = pd_straight(target.distance.between_two_points);
 				straight = pd_straight(target.velocity.velocity - robot.velocity.velocity);
 				motor.x = get_motor_output_x(straight /*+ add_output*/, target.angle.degree);
@@ -272,7 +275,7 @@ int main(void)
 				target.distance.between_two_points = get_twopoints_distance(target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y);
 				target.angle.degree = get_target_degree( target.coord.c_x - robot.coord.c_x, target.coord.c_y - robot.coord.c_y );
 				target.distance.vertical = get_vertical_distance( target.angle.degree, target.distance.between_two_points);
-				target.velocity.velocity = get_target_velocity( target.distance.between_two_points, target.distance.vertical, 10000.0, 100000.0, 500.0);
+				target.velocity.velocity = get_target_velocity( target.distance.between_two_points, target.distance.vertical, 10000.0, 100000.0, 1000.0);
 				//straight = pd_straight(target.distance.between_two_points);
 				straight = pd_straight( target.velocity.velocity - robot.velocity.velocity);
 				motor.x = get_motor_output_x(straight/* + add_output*/, target.angle.degree);
@@ -380,10 +383,12 @@ int main(void)
 					buzzer_on();
 				#endif
 			}//start_sw
-
+			if(old_velocity <= robot.velocity.velocity){
+				old_velocity = robot.velocity.velocity;
+			}
 #if SERIAL == ON
 				if(count_time(1) >= 200){
-					reset_count_time(1);
+					//reset_count_time(1);
 
 #ifdef DEBUG_TASK
 					f_print(PC, "task", debug_task);
@@ -422,7 +427,9 @@ int main(void)
 					f_print(PC, "task", task);
 #endif
 #ifdef DEBUG_VELOCITY_DATA
-					f_print(PC, "velocity",robot.velocity.velocity);
+					if(old_velocity != robot.velocity.velocity){
+						f_print(PC, "velocity", robot.velocity.velocity);
+					}
 #endif
 					put_enter(PC);
 				}

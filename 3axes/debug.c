@@ -35,6 +35,7 @@ void debug(void)
 	transmit_usb("[12 : reverse motor]\n\r");
 	transmit_usb("[13 : stop motor]\n\r");
 	transmit_usb("[14 : arm motor]\n\r");
+	transmit_usb("[15 : reverse arm motor]\n\r");
 	//transmit_usb("[p : p gain adjustment]\n\r");
 	//transmit_usb("[d : d gain adjustment]\n\r");
 
@@ -50,9 +51,7 @@ void debug(void)
 			get_robot_inf( &robot );
 			cam_data(&target_cam, &robot);
 			start_sw =positive_chattering(START_SW,1);
-			//start_sw =negative_chattering(START_SW,1);
 			robot.sw.limit_sw = negative_chattering(LIMIT_SW,2);
-			//robot.ad = get_Average( 20 , 0 , get_ADC1_value(0) );
 			robot.ad = get_ADC1_value(0);
 		}
 
@@ -120,6 +119,9 @@ void debug(void)
 
 		}else if(strcmp(str, "14") == 0){
 			move_arm(100);
+
+		}else if(strcmp(str, "15") == 0){
+			move_arm(-100);
 		}
 
 		old_limit_sw = robot.sw.start_sw;
