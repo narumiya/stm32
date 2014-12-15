@@ -16,6 +16,7 @@ typedef struct{
 	float turn;
 	float x;
 	float y;
+	float arm;
 }motor_output_t;
 
 void move_left_tire( float );

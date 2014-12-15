@@ -18,6 +18,8 @@ typedef struct{
 typedef struct{
 	float c_x;
 	float c_y;
+	float arm_x;
+	float arm_y;
 }coord_t;
 
 typedef struct{
@@ -76,7 +78,7 @@ float pd_rock( float present , float target , float p_gain, float d_gain );
 
 float pd_straight( float  );
 
-float pd_arm_rock( float present , float target , float p_gain, float d_gain );
+float pd_arm_rock( float present , float target , float p_gain, float d_gain , int box);
 
 float get_motor_output_l(float motor_output_x,float motor_output_y,float degree_now,const float degree);
 
@@ -113,6 +115,8 @@ float get_Average( int number_scope, int box, float add );
 void sonic_waves(robot_information_t *robot);
 
 void position_rock(robot_information_t *robot, motor_output_t *motor);
+
+void init_arm(robot_information_t *robot);
 
 void arm_length(robot_information_t *robot);
 

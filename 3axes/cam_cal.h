@@ -13,9 +13,9 @@
 #define HALF_PC_PICTURE_X	(PC_PICTURE_X / 2.0)
 #define PC_PICTURE_Y				180.0
 
-#define UNDER_CAM_POSI_X	100.0
+#define UNDER_CAM_POSI_X	95.0
 #define UNDER_CAM_POSI_Y	0.0
-#define OVER_CAM_POSI_X		90.0
+#define OVER_CAM_POSI_X		85.0
 #define OVER_CAM_POSI_Y		0.0
 
 typedef struct{

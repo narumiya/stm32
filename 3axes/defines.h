@@ -7,20 +7,31 @@
 #define CENTER						ON	//ストーンを中心に持っていく
 #define SERIAL 						ON
 #define DEBUG						OFF
-#define ABSOLUTE_D			OFF
+
+#define ABSOLUTE_D				OFF
+#define STORN_COORD				OFF
+#define FINISH_ARM					ON
+#define MOVE_ARM_CAL			OFF
+#define STORN_RANGE_CAM	ON
 
 /* 送るデータ切り替え */
 //#define DEBUG_CAM_DATA 						//カメラの素のデーター
-//#define DEBUG_ROBO_COORD_DATA		//ロボットの自己位置
+#define DEBUG_ROBO_COORD_DATA		//ロボットの自己位置
 //#define DEBUG_AD_DATA							//アームの距離
 //#define DEBUG_TASK
 //#define DEBUG_OUTPUT_DATA					//モーター出力
 //#define DEBUG_ENC_DATA						//エンコーダの値
 //#define DEBUG_TARGET_DATA					//目標値
 //#define DEBUG_TARGET_COORD					//目標座標
-#define DEBUG_VELOCITY_DATA				//速度
+//#define DEBUG_VELOCITY_DATA				//速度
+//#define CAM_DATA2
 
-#define PC				usb_put_char
+#define MAX_VELOCITY			290.0//270.0
+#define ROBO_TO_CENTER	1250.0
+#define ROBO_TO_ARM			150.0
+
+//#define PC				usb_put_char
+#define PC				transmit_usart2_c
 
 #define ON			1
 #define OFF		0
@@ -40,14 +51,14 @@
 #define CALIBRA_P_GAIN			100.0
 #define CALIBRA_D_GAIN			120.0
 
-#define STRAIGHT_P_GAIN		0.5
-#define STRAIGHT_D_GAIN		0
+#define STRAIGHT_P_GAIN		0.9//0.75
+#define STRAIGHT_D_GAIN		0.0
 
-#define ROCK_P_ARMGAIN		100.0
-#define ROCK_D_ARMGAIN		150.0
+#define ROCK_P_ARMGAIN		2.0
+#define ROCK_D_ARMGAIN		3.2
 
 /*最高速度*/
-#define MAX_VELOCITY						500.0
+//#define MAX_VELOCITY						500.0
 #define MAX_ANGULAR_VELOCITY	170.0	//最高角速度
 
 /* 割り込みタイム */
@@ -61,7 +72,7 @@
 //#define START_PORT					GPIOA, GPIO_Pin_0//マイコンについているスイッチ
 #define START_SW					GPIO_ReadInputDataBit(START_PORT)
 #define BUZZER							GPIOE, GPIO_Pin_1
-#define ENC_RESET					GPIOD, GPIO_Pin_3
+#define ENC_RESET					GPIOA, GPIO_Pin_5
 #define LIMIT_PORT					GPIOC, GPIO_Pin_15
 #define LIMIT_SW						GPIO_ReadInputDataBit(LIMIT_PORT)
 #define POTENTIO						GPIOC, GPIO_Pin_0
@@ -72,6 +83,7 @@
 
 /*ストーン検知してない*/
 #define UNDISCOVERED		9999
+#define OVER_DISCOVERD	8888
 
 /*エンコーダのカウント*/
 #define ENCL()						tim4_count()

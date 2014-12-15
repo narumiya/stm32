@@ -72,7 +72,6 @@ void initialize(robot_information_t *robot, target_t *target )
 	target->velocity.velocity = 0.00;
 	target->velocity.angular_velocity = 0.00;
 	deadtime();
-	GPIO_ResetBits(ENC_RESET);
 }
 
 float Absolute_duty(float max_duty, float target, float now){

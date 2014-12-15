@@ -10,6 +10,8 @@ void transmit_usb(char word[]);
 
 void transmit_usart1_s(char word[]);
 
+void transmit_usart2_c(char word);
+
 void transmit_usart2_s(char word[]);
 
 void transmit_usart3_s(char word[]);

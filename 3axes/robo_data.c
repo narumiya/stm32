@@ -1,5 +1,6 @@
 #include "robo_data.h"
 #include "config_adc.h"
+#include "chata.h"
 
 /******************************************************************************
 *	タイトル ： 設定した範囲内の値を返す
@@ -40,20 +41,20 @@ float pd_rock( float present , float target , float p_gain, float d_gain )					/
 	return ( output );
 }
 
-float pd_arm_rock( float present , float target , float p_gain, float d_gain )					//pd 直進中のロック
+float pd_arm_rock( float present , float target , float p_gain, float d_gain , int box)					//pd 直進中のロック
 {
 	float	output		= 0.00,
 			deviation	= 0.00;											//deviation 偏差
 
-	static float old_deviation = 0.00;
+	static float old_deviation[10] = {0.00};
 
-	deviation = revision_degree( target - present );
+	deviation = target - present;
 
-	output = ( p_gain * deviation ) + ( d_gain * ( deviation - old_deviation ) );
+	output = ( p_gain * deviation ) + ( d_gain * ( deviation - old_deviation[box] ) );
 
 	output = Limit_ul( 100 , -100 , output );
 
-	old_deviation = deviation;
+	old_deviation[box] = deviation;
 
 	return ( output );
 }
@@ -67,9 +68,11 @@ float pd_straight( float deviation )											//pd 直進 deviation 偏差
 	output = ( STRAIGHT_P_GAIN * deviation ) + ( STRAIGHT_D_GAIN * ( deviation - old_deviation ) );
 	
 	output = Limit_ul( 100 , -100 , output );
+
+	//output = get_Average(10, 3, output);
 	
 	old_deviation = deviation;
-	
+
 	return ( output );
 }
 
@@ -243,18 +246,18 @@ float get_horizontal_distance(float degree,float distance)
 ******************************************************************************/
 float get_vertical_distance(float degree , float distance )
 {
-	float	vertical_distance	= 0.00;
+	float		vertical_distance	= 0.00;
 	
 	if( degree > 90 ){
      	degree	= 180 - degree;
-     	vertical_distance	= ( -1 ) * distance * cos( degree * ( M_PI / 180) );
+     	vertical_distance	= ( -1 ) * distance * sin( (90-degree) * ( M_PI / 180) );
   
 	}else if( degree < -90 ){
-		degree	= degree * ( -1 ) - 180;
-   		vertical_distance	= ( -1 ) * distance * cos( degree * (M_PI / 180 ) );
+		degree	= -degree - 180;
+   		vertical_distance	= ( -1 ) * distance * sin( (90-degree) * (M_PI / 180 ) );
 	
 	}else{
-		vertical_distance	= distance * cos( degree * ( M_PI / 180 ) );
+		vertical_distance	= distance * sin( (90-degree) * ( M_PI / 180 ) );
 	}
 
 	return ( vertical_distance );
@@ -276,7 +279,7 @@ float get_target_velocity( float distance_rest , float vertical_distance , float
 	
 	if( distance_rest > 0.5 * max_velocity * max_velocity / a_down ){
 		if( target_velocity < max_velocity ){
-			target_velocity += ( a_up * INTERRUPT_TIME );
+			target_velocity += ( a_up * (INTERRUPT_TIME * 0.001) );
 												
 		}else{
 			target_velocity = max_velocity;
@@ -287,6 +290,8 @@ float get_target_velocity( float distance_rest , float vertical_distance , float
 		target_velocity =  sqrt( fabs( 2.0 * a_down * distance_rest ) );
 	}
 	
+	//target_velocity = get_Average(5 ,2, target_velocity);
+
 	return ( target_velocity );
 }
 
@@ -499,66 +504,68 @@ void get_robot_inf( robot_information_t *robot )
 					old_enc_dis_r		= 0.00,
 					old_enc_dis_l		= 0.00;
 
-	robot->enc_cnt.f = (-1)*(get_atoz_value('b'-'a'));
-	robot->enc_cnt.l = (get_atoz_value('a'-'a'));
-	robot->enc_cnt.r = (get_atoz_value('c'-'a'));
+	if(robot->sw.start_sw == ON){
+		robot->enc_cnt.f = (-1)*(get_atoz_value('b'-'a'));
+		robot->enc_cnt.l = (get_atoz_value('a'-'a'));
+		robot->enc_cnt.r = (get_atoz_value('c'-'a'));
 
-	enc_dis_f = ENC_DIAMETER_F * M_PI * ( robot->enc_cnt.f / PULSE );
-	enc_dis_r = ENC_DIAMETER_R * M_PI * (robot->enc_cnt.r / PULSE );
-	enc_dis_l = ENC_DIAMETER_L * M_PI * ( robot->enc_cnt.l / PULSE );
+		enc_dis_f = ENC_DIAMETER_F * M_PI * ( robot->enc_cnt.f / PULSE );
+		enc_dis_r = ENC_DIAMETER_R * M_PI * (robot->enc_cnt.r / PULSE );
+		enc_dis_l = ENC_DIAMETER_L * M_PI * ( robot->enc_cnt.l / PULSE );
 
-	enc_dis_subt_f = enc_dis_f - old_enc_dis_f;
-	enc_dis_subt_r = enc_dis_r - old_enc_dis_r;
-	enc_dis_subt_l = enc_dis_l - old_enc_dis_l;
+		enc_dis_subt_f = enc_dis_f - old_enc_dis_f;
+		enc_dis_subt_r = enc_dis_r - old_enc_dis_r;
+		enc_dis_subt_l = enc_dis_l - old_enc_dis_l;
 
-	radian_f = enc_dis_subt_f / CENTER_TO_ENC;
-	radian_r = enc_dis_subt_r / CENTER_TO_ENC;
-	radian_l = enc_dis_subt_l / CENTER_TO_ENC;
+		radian_f = enc_dis_subt_f / CENTER_TO_ENC;
+		radian_r = enc_dis_subt_r / CENTER_TO_ENC;
+		radian_l = enc_dis_subt_l / CENTER_TO_ENC;
 
-	degree += R_TO_D( ( radian_f + radian_r + radian_l ) / 3 );
+		degree += R_TO_D( ( radian_f + radian_r + radian_l ) / 3 );
 
-	robot->angle.degree = revision_degree( degree );
+		robot->angle.degree = revision_degree( degree );
 
-	if( enc_dis_subt_f < 0 ){
-		 degree_reverse_f = 180.0;
+		if( enc_dis_subt_f < 0 ){
+			 degree_reverse_f = 180.0;
+		}
+		if( enc_dis_subt_r < 0 ){
+			degree_reverse_r = 180.0;
+		}
+		if( enc_dis_subt_l < 0 ){
+			degree_reverse_l = 180.0;
+		}
+
+		/*enc_x_f += 2 * fabs( enc_dis_subt_f ) * cos( D_TO_R( revision_degree( 90 + robot->angle.degree + degree_reverse_f ) ) );
+		enc_y_f += 2 * fabs( enc_dis_subt_f ) * sin( D_TO_R( revision_degree( 90 + robot->angle.degree +degree_reverse_f ) ) );
+		enc_x_r += 2 * fabs( enc_dis_subt_r ) * cos( D_TO_R( revision_degree( -30 + robot->angle.degree + degree_reverse_r ) ) );
+		enc_y_r += 2 * fabs( enc_dis_subt_r ) * sin( D_TO_R( revision_degree(-30 + robot->angle.degree + degree_reverse_r ) ) );
+		enc_x_l += 2 * fabs( enc_dis_subt_l ) * cos( D_TO_R( revision_degree( 30 + 180 + robot->angle.degree + degree_reverse_l ) ) );
+		enc_y_l += 2 * fabs( enc_dis_subt_l ) * sin( D_TO_R( revision_degree( 30 + 180 + robot->angle.degree + degree_reverse_l ) ) );*/
+
+		enc_x_f += 2 * fabs( enc_dis_subt_f ) * cos( D_TO_R( revision_degree( -180 + robot->angle.degree + degree_reverse_f ) ) );
+		enc_y_f += 2 * fabs( enc_dis_subt_f ) * sin( D_TO_R( revision_degree( -180 + robot->angle.degree +degree_reverse_f ) ) );
+		enc_x_r += 2 * fabs( enc_dis_subt_r ) * cos( D_TO_R( revision_degree( 60 + robot->angle.degree + degree_reverse_r ) ) );
+		enc_y_r += 2 * fabs( enc_dis_subt_r ) * sin( D_TO_R( revision_degree( 60 + robot->angle.degree + degree_reverse_r ) ) );
+		enc_x_l += 2 * fabs( enc_dis_subt_l ) * cos( D_TO_R( revision_degree( -60 + robot->angle.degree + degree_reverse_l ) ) );
+		enc_y_l += 2 * fabs( enc_dis_subt_l ) * sin( D_TO_R( revision_degree( -60  + robot->angle.degree + degree_reverse_l ) ) );
+
+		robot->coord.c_x = ( enc_x_f + enc_x_r + enc_x_l ) / 3;
+		robot->coord.c_y = ( enc_y_f + enc_y_r + enc_y_l ) / 3;
+
+		old_enc_dis_f = enc_dis_f;
+		old_enc_dis_r = enc_dis_r;
+		old_enc_dis_l = enc_dis_l;
+
+		velocity_x = (( robot->coord.c_x - old_x ) / (INTERRUPT_TIME / 1000));
+		velocity_y = (( robot->coord.c_y - old_y ) / (INTERRUPT_TIME / 1000));
+
+		robot->velocity.velocity	= sqrt( ( velocity_x * velocity_x ) + ( velocity_y * velocity_y ) );
+		robot->velocity.angular_velocity = ( revision_degree(robot->angle.degree - old_degree) ) / INTERRUPT_TIME;
+
+		old_x = robot->coord.c_x;
+		old_y = robot->coord.c_y;
+		old_degree = robot->angle.degree;
 	}
-	if( enc_dis_subt_r < 0 ){
-		degree_reverse_r = 180.0;
-	}
-	if( enc_dis_subt_l < 0 ){
-		degree_reverse_l = 180.0;
-	}
-
-	/*enc_x_f += 2 * fabs( enc_dis_subt_f ) * cos( D_TO_R( revision_degree( 90 + robot->angle.degree + degree_reverse_f ) ) );
-	enc_y_f += 2 * fabs( enc_dis_subt_f ) * sin( D_TO_R( revision_degree( 90 + robot->angle.degree +degree_reverse_f ) ) );
-	enc_x_r += 2 * fabs( enc_dis_subt_r ) * cos( D_TO_R( revision_degree( -30 + robot->angle.degree + degree_reverse_r ) ) );
-	enc_y_r += 2 * fabs( enc_dis_subt_r ) * sin( D_TO_R( revision_degree(-30 + robot->angle.degree + degree_reverse_r ) ) );
-	enc_x_l += 2 * fabs( enc_dis_subt_l ) * cos( D_TO_R( revision_degree( 30 + 180 + robot->angle.degree + degree_reverse_l ) ) );
-	enc_y_l += 2 * fabs( enc_dis_subt_l ) * sin( D_TO_R( revision_degree( 30 + 180 + robot->angle.degree + degree_reverse_l ) ) );*/
-
-	enc_x_f += 2 * fabs( enc_dis_subt_f ) * cos( D_TO_R( revision_degree( -180 + robot->angle.degree + degree_reverse_f ) ) );
-	enc_y_f += 2 * fabs( enc_dis_subt_f ) * sin( D_TO_R( revision_degree( -180 + robot->angle.degree +degree_reverse_f ) ) );
-	enc_x_r += 2 * fabs( enc_dis_subt_r ) * cos( D_TO_R( revision_degree( 60 + robot->angle.degree + degree_reverse_r ) ) );
-	enc_y_r += 2 * fabs( enc_dis_subt_r ) * sin( D_TO_R( revision_degree( 60 + robot->angle.degree + degree_reverse_r ) ) );
-	enc_x_l += 2 * fabs( enc_dis_subt_l ) * cos( D_TO_R( revision_degree( -60 + robot->angle.degree + degree_reverse_l ) ) );
-	enc_y_l += 2 * fabs( enc_dis_subt_l ) * sin( D_TO_R( revision_degree( -60  + robot->angle.degree + degree_reverse_l ) ) );
-
-	robot->coord.c_x = ( enc_x_f + enc_x_r + enc_x_l ) / 3;
-	robot->coord.c_y = ( enc_y_f + enc_y_r + enc_y_l ) / 3;
-
-	old_enc_dis_f = enc_dis_f;
-	old_enc_dis_r = enc_dis_r;
-	old_enc_dis_l = enc_dis_l;
-
-	velocity_x = (( robot->coord.c_x - old_x ) / (INTERRUPT_TIME / 1000));
-	velocity_y = (( robot->coord.c_y - old_y ) / (INTERRUPT_TIME / 1000));
-
-	robot->velocity.velocity	= sqrt( ( velocity_x * velocity_x ) + ( velocity_y * velocity_y ) );
-	robot->velocity.angular_velocity = ( revision_degree(robot->angle.degree - old_degree) ) / INTERRUPT_TIME;
-
-	old_x = robot->coord.c_x;
-	old_y = robot->coord.c_y;
-	old_degree = robot->angle.degree;
 }
 
 void init_robot_inf(robot_information_t *robot)
@@ -649,25 +656,49 @@ void position_rock(robot_information_t *robot, motor_output_t *motor)
 	motor->b = get_motor_output_b( output_x, output_y, robot->angle.degree ,0);
 }
 
+void init_arm(robot_information_t *robot)
+{
+	static short limit_sw = 0;
+
+	limit_sw = positive_chattering(LIMIT_SW,3);
+
+	if(limit_sw == EDGE_UP){
+		robot->sw.limit_sw = 1;
+	}
+
+	if(robot->sw.limit_sw != 1){
+		move_arm(-100);
+	}else{
+		move_arm(0);
+	}
+}
+
 void arm_length(robot_information_t *robot)
 {
 	static int start = 0;
 	static short init_ad_value = 0;
-	int flag = 0;
-	if(start >= 100){
-		flag = 1;
+	static int flag = 0;
+
+	if(robot->sw.limit_sw == 1 && flag == 0) {
+		if(start >= 100){
+			flag = 1;
+		}
+		if(flag != 1){
+			init_ad_value =  get_Average( 20, 0, get_ADC1_value(0) );
+		}
+		if(start <=100){
+			start += INTERRUPT_TIME;
+		}
 	}
 
-	if(flag == 0){
-		init_ad_value =  get_Average( 20, 0, get_ADC1_value(0) );
-	}
-
-	robot->ad = get_Average( 20, 0, get_ADC1_value(0) );
-
-	robot->arm_dis =  ((float)robot->ad - (float)init_ad_value) * 150.0 /256.0;
-
-	if(start <=100){
-		start += INTERRUPT_TIME;
+	if(robot->sw.limit_sw == 1){
+		robot->ad = get_Average(20, 0, get_ADC1_value(0));
+		robot->arm_dis =  ( ( ((float)robot->ad - (float)init_ad_value) * 150.0 ) / 267.0 ) + 150.0;
+		robot->coord.arm_x = (robot->arm_dis) * cos(D_TO_R(robot->angle.degree)) + robot->coord.c_x;
+		robot->coord.arm_y = (robot->arm_dis) * sin(D_TO_R(robot->angle.degree)) + robot->coord.c_y;
+	}else{
+		robot->coord.arm_x = 0.00;
+		robot->coord.arm_y = 0.00;
 	}
 }
 

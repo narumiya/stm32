@@ -20,6 +20,8 @@ void debug(void)
 								start_sw =0,
 								old_limit_sw = 0;
 
+	float target_degree = 0.00;
+
 	transmit_usb("[ r : reset] \n\r");
 	transmit_usb("[ 1 : encoder]\n\r");
 	transmit_usb("[ 2 : AD]\n\r");
@@ -38,6 +40,7 @@ void debug(void)
 	transmit_usb("[15 : reverse arm motor]\n\r");
 	//transmit_usb("[p : p gain adjustment]\n\r");
 	//transmit_usb("[d : d gain adjustment]\n\r");
+	GPIO_ResetBits(ENC_RESET);
 
 	while(strcmp(str, "r") != 0){
 		if(usb_available() != 0){
@@ -77,8 +80,7 @@ void debug(void)
 
 		}else if(strcmp(str, "5") == 0){
 			GPIO_SetBits(ENC_RESET);
-			GPIO_ResetBits(ENC_RESET);
-			str[0] = 'r';
+			//str[0] = 'r';
 
 		}else if(strcmp(str, "6") == 0){
 			f2_print(PC, "under", target_cam.under_x, target_cam.under_y );
@@ -86,13 +88,14 @@ void debug(void)
 			put_enter(PC);
 
 		}else if(strcmp(str, "7") == 0){
-			f2_print(PC, "target_cam", target_cam.x, target_cam.y);
+			f2_print(PC, "target_cam", (target_cam.x) * cos(D_TO_R(robot.angle.degree))+robot.coord.c_x, (target_cam.y)*sin(D_TO_R(robot.angle.degree))+robot.coord.c_y);
 			put_enter(PC);
 
 		}else if(strcmp(str, "8") == 0){
 			f2_print(PC, "under", target_cam.under_x, target_cam.under_y);
 			f2_print(PC, "over", target_cam.over_x, target_cam.over_y );
-			f2_print(PC, "target_cam", target_cam.x, target_cam.y);
+			target_degree = get_target_degree(ROBO_TO_CENTER - robot.coord.c_x, robot.coord.c_y);
+			f2_print(PC, "target_cam", (target_cam.x) * cos(D_TO_R(target_degree)) + robot.coord.c_x, (target_cam.y) * sin(D_TO_R(target_degree)) + robot.coord.c_y);
 			put_enter(PC);
 
 		}else if(strcmp(str, "9") == 0){

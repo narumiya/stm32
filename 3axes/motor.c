@@ -97,11 +97,6 @@ void move_arm(float arm_duty)
 		GPIO_ResetBits(ARM_PULL);
 	}
 
-	 if(negative_chattering(LIMIT_SW,2) == EDGE_UP){
-		GPIO_ResetBits(ARM_PUSH);
-		GPIO_ResetBits(ARM_PULL);
-	 }
-
 	arm_duty = Limit_ul( MAX_DUTY , 0 , fabs(arm_duty) );
 	Set_duty(ARM_PWM, ((100 - arm_duty) / 100) );
 }
