@@ -12,7 +12,7 @@ void receive_att( void )
 {
     char c = '\0';
 
-	c = Receive_usart3_c();//受信データ
+	c = receive_usart3_c();//受信データ
 
     receive_order_c( c );
 }
@@ -113,7 +113,7 @@ char Receive_usart1_c(void)
 	return i;
 }
 
-char Receive_usart2_c(void)
+char receive_usart2_c(void)
 {
 	char i ='\0';
 
@@ -124,7 +124,7 @@ char Receive_usart2_c(void)
 	return i;
 }
 
-char Receive_usart3_c(void)
+char receive_usart3_c(void)
 {
 	char i = '\0';
 

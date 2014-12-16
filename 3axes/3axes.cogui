@@ -29,6 +29,9 @@
 <part id="11"/>
 <part id="12"/>
 <part id="13"/>
+<part id="14"/>
+<part id="15"/>
+<part id="16"/>
 </presentation>
 </folder>
 </info>
@@ -43,9 +46,9 @@
 </folder>
 </info>
 </editorArea>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/CooCox/CoIDE/workspace/stm32/3axes/main.c" title="main.c" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/main.c" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/CooCox/CoIDE/workspace/stm32/3axes/main.c" title="main.c" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/main.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="13419" selectionTopPixel="7110"/>
+<editorState selectionHorizontalPixel="0" selectionLength="12" selectionOffset="235" selectionTopPixel="60"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="transmit.c" partName="transmit.c" path="C:/CooCox/CoIDE/workspace/stm32/3axes/transmit.c" title="transmit.c" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/transmit.c" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/transmit.c"/>
@@ -98,6 +101,18 @@
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="debug.h" partName="debug.h" path="C:/CooCox/CoIDE/workspace/stm32/3axes/debug.h" title="debug.h" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/debug.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/debug.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="config_usart.h" partName="config_usart.h" path="C:/CooCox/CoIDE/workspace/stm32/3axes/stm32f4_config/config_usart.h" title="config_usart.h" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/stm32f4_config/config_usart.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/stm32f4_config/config_usart.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="10" selectionOffset="280" selectionTopPixel="44"/>
+</editor>
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="config_usart.c" partName="config_usart.c" path="C:/CooCox/CoIDE/workspace/stm32/3axes/stm32f4_config/config_usart.c" title="config_usart.c" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/stm32f4_config/config_usart.c" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/stm32f4_config/config_usart.c"/>
+<editorState selectionHorizontalPixel="0" selectionLength="15" selectionOffset="2590" selectionTopPixel="1240"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_usart.h" partName="stm32f4xx_usart.h" path="C:/CooCox/CoIDE/workspace/stm32/3axes/cmsis_lib/include/stm32f4xx_usart.h" title="stm32f4xx_usart.h" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/cmsis_lib/include/stm32f4xx_usart.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/cmsis_lib/include/stm32f4xx_usart.h"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="6951" selectionTopPixel="1880"/>
 </editor>
 <editor focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="defines.h" partName="defines.h" path="C:/CooCox/CoIDE/workspace/stm32/3axes/defines.h" title="defines.h" tooltip="C:/CooCox/CoIDE/workspace/stm32/3axes/defines.h" workbook="org.eclipse.ui.internal.EditorStack@cd0da4">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/3axes/defines.h"/>
@@ -317,22 +332,10 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/3axes/main.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/3axes/robo_data.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/3axes/robo_finction.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/3axes/stm32f4_config/config_usart.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/3axes/stm32f4_config/config_usart.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/3axes/cmsis_lib/include/stm32f4xx_usart.h"/>
 </editors>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="1090" y="0"/>
-</item>
-<item historyLabel="defines.h" index="0">
-<position info="not_deleted" x="873" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="7026" y="0"/>
-</item>
-<item historyLabel="defines.h" index="0">
-<position info="not_deleted" x="682" y="0"/>
-</item>
-<item historyLabel="main.c" index="1">
-<position info="not_deleted" x="4567" y="22"/>
-</item>
 <item historyLabel="robo_data.c" index="2">
 <position info="not_deleted" x="5389" y="166"/>
 </item>
@@ -465,8 +468,23 @@
 <item historyLabel="defines.h" index="0">
 <position info="not_deleted" x="288" y="0"/>
 </item>
-<item active="true" historyLabel="main.c" index="1">
+<item historyLabel="main.c" index="1">
 <position info="not_deleted" x="10772" y="0"/>
+</item>
+<item historyLabel="config_usart.h" index="4">
+<position info="not_deleted" x="444" y="0"/>
+</item>
+<item historyLabel="main.c" index="1">
+<position info="not_deleted" x="235" y="12"/>
+</item>
+<item historyLabel="config_usart.h" index="4">
+<position info="not_deleted" x="280" y="10"/>
+</item>
+<item historyLabel="config_usart.c" index="5">
+<position info="not_deleted" x="2590" y="15"/>
+</item>
+<item active="true" historyLabel="stm32f4xx_usart.h" index="6">
+<position info="not_deleted" x="6546" y="15"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -475,6 +493,15 @@
 <actionBarAdvisor/>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_usart.h" tooltip="3axes/cmsis_lib/include/stm32f4xx_usart.h">
+<persistable path="/3axes/cmsis_lib/include/stm32f4xx_usart.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="config_usart.c" tooltip="3axes/stm32f4_config/config_usart.c">
+<persistable path="/3axes/stm32f4_config/config_usart.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="config_usart.h" tooltip="3axes/stm32f4_config/config_usart.h">
+<persistable path="/3axes/stm32f4_config/config_usart.h"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="stm32f4xx_gpio.c" tooltip="3axes/cmsis_lib/source/stm32f4xx_gpio.c">
 <persistable path="/3axes/cmsis_lib/source/stm32f4xx_gpio.c"/>
 </file>
@@ -510,15 +537,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="my_standard_io.c" tooltip="3axes/my_standard_io.c">
 <persistable path="/3axes/my_standard_io.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="cam_cal.h" tooltip="3axes/cam_cal.h">
-<persistable path="/3axes/cam_cal.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="cam_cal.c" tooltip="3axes/cam_cal.c">
-<persistable path="/3axes/cam_cal.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="robo_data.c" tooltip="3axes/robo_data.c">
-<persistable path="/3axes/robo_data.c"/>
 </file>
 </mruList>
 </workbench>
