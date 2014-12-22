@@ -39,7 +39,7 @@ void ColorfulRingOfDeath(void);
 //void usb_put_char(char c);
 //Discoveryã‚ÌmicroUSB‚Éˆê•¶š‘—M‚ğs‚¤
 
-//void Init_usb(void);
+void Init_usb(void);
 //Discoveryã‚ÌmicroUSB‚Ìİ’è
 
 //void ColorfulRingOfDeath(void);

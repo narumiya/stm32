@@ -34,7 +34,7 @@ void transmit_usart2_s(char word[])
 void transmit_usart2_c(char word)
 {
 	while(USART_GetFlagStatus( USART2, USART_FLAG_TXE) == RESET);
-	USART_SendData( USART2, word );
+	USART_SendData( USART2, word);
 }
 
 void transmit_usart3_s(char word[])
@@ -46,4 +46,10 @@ void transmit_usart3_s(char word[])
 		USART_SendData( USART3, word[z] );
 		z ++;
 	}
+}
+
+void transmit_usart3_c(char word)
+{
+	while(USART_GetFlagStatus( USART3, USART_FLAG_TXE) == RESET);
+	USART_SendData( USART3, word );
 }

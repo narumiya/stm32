@@ -36,6 +36,7 @@ void USART2_IRQHandler(void){
 *	  作成日 ： 2014/11/12
 ******************************************************************************/
 void USART3_IRQHandler(void){
+	receive_att();
 }
 
 /******************************************************************************
@@ -67,7 +68,6 @@ void Init_USART(USART_TypeDef *USARTx,unsigned int baudrate, GPIO_TypeDef *GPIOx
 	GPIO_PinAFConfig(GPIOx_TX, Pin_select_source(pin_TX), GPIO_af_USART_select(USARTx));//USART1 TX/PB6
 	GPIO_PinAFConfig(GPIOx_RX, Pin_select_source(pin_RX), GPIO_af_USART_select(USARTx));//USART1 RX/PB7
 
-
 	//USART1の設定
 	USART_InitStructure.USART_BaudRate 				= baudrate;							//ボーレートの設定
 	USART_InitStructure.USART_WordLength 			= USART_WordLength_8b;				//ビット長
@@ -87,3 +87,4 @@ void Init_USART(USART_TypeDef *USARTx,unsigned int baudrate, GPIO_TypeDef *GPIOx
 	NVIC_InitStructure.NVIC_IRQChannelCmd 					= ENABLE;		//割り込みの有効化
 	NVIC_Init(&NVIC_InitStructure);											//割り込み設定
 }
+

@@ -16,6 +16,8 @@ void receive_order_depot( int target_box , char *storage_str , int minus_flag , 
 
 void receive_order_c(char character);
 
+char receive();
+
 float change_float(char *str);
 
 char receive_usart1_c(void);
