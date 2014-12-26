@@ -5,8 +5,12 @@
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
       </source>
-      <source file="..\..\..\..\3axes\receive.c" lastModified="14a5d2c8b2c">
-         <include file="..\..\..\..\3axes\receive.h"/>
+      <source file="..\..\..\motor.h" lastModified="14a85b05b25">
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_gpio.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_tim.h"/>
+         <include file="..\..\..\stm32f4_config\config_pwm.h"/>
+         <include file="..\..\..\stm32f4_config\config_port.h"/>
+         <include file="..\..\..\calculate.h"/>
       </source>
       <source file="..\..\..\stm32f4_config\config_pwm.h" lastModified="149ae0c0640">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
@@ -15,6 +19,13 @@
          <include file="..\..\..\cmsis_boot\system_stm32f4xx.h"/>
          <include file="..\..\..\stm32f4_config\config_port.h"/>
          <include file="..\..\..\stm32f4_config\name_converter.h"/>
+      </source>
+      <source file="..\..\..\motor.c" lastModified="14a85bd1d76">
+         <include file="..\..\..\motor.h"/>
+         <include file="..\..\..\define.h"/>
+         <include file="..\..\..\motor_define.h"/>
+      </source>
+      <source file="..\..\..\define.h" lastModified="14a85a8a5fa">
       </source>
       <source file="..\..\..\stm32f4_config\config_pwm.c" lastModified="149c7a2719a">
          <include file="..\..\..\stm32f4_config\config_pwm.h"/>
@@ -148,11 +159,18 @@
       <source file="..\..\..\stm32f4_config\config_encoder.c" lastModified="149c69f9419">
          <include file="..\..\..\stm32f4_config\config_encoder.h"/>
       </source>
+      <source file="..\..\..\calculate.h" lastModified="14a2f580bb8">
+         <include file="..\..\..\define.h"/>
+         <include file="..\..\..\typedef.h"/>
+      </source>
       <source file="..\..\..\stm32f4_config\usb\usb_conf\usbd_desc.h" lastModified="1485e794940">
          <include file="..\..\..\stm32f4_config\usb\usb_lib\core\usbd_def.h"/>
       </source>
       <source file="..\..\..\stm32f4_config\usb\usb_lib\core\usbd_usr.h" lastModified="1485e795110">
          <include file="..\..\..\stm32f4_config\usb\usb_lib\core\usbd_core.h"/>
+      </source>
+      <source file="..\..\..\calculate.c" lastModified="14a2f5807d0">
+         <include file="..\..\..\calculate.h"/>
       </source>
       <source file="..\..\..\stm32f4_config\usb\usb_conf\usbd_desc.c" lastModified="1485e794940">
          <include file="..\..\..\stm32f4_config\usb\usb_lib\core\usbd_core.h"/>
@@ -184,6 +202,12 @@
          <include file="..\..\..\stm32f4_config\usb\usb_conf\usb_conf.h"/>
          <include file="..\..\..\stm32f4_config\usb\usb_lib\otg\usb_dcd_int.h"/>
       </source>
+      <source file="..\..\..\can.h" lastModified="14a81192760">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_can.h"/>
+         <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
+         <include file="..\..\..\cmsis_lib\include\misc.h"/>
+      </source>
       <source file="..\..\..\stm32f4_config\usb\usb_lib\otg\usb_dcd.c" lastModified="1485e795110">
          <include file="..\..\..\stm32f4_config\usb\usb_conf\usb_conf.h"/>
          <include file="..\..\..\stm32f4_config\usb\usb_lib\otg\usb_dcd.h"/>
@@ -193,6 +217,9 @@
          <include file="..\..\..\stm32f4_config\usb\usb_conf\usb_conf.h"/>
       </source>
       <source file="..\..\..\cmsis\core_cmFunc.h" lastModified="14a512f47b2">
+      </source>
+      <source file="..\..\..\can.c" lastModified="14a8123a3db">
+         <include file="..\..\..\can.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_fsmc.h" lastModified="14a5130ca8c">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
@@ -326,13 +353,15 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_syscfg.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
+      <source file="..\..\..\motor_define.h" lastModified="14a85b76031">
+      </source>
       <source file="..\..\..\cmsis_lib\include\stm32f4xx_i2c.h" lastModified="14a51302212">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h" lastModified="14a512fcdb5">
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_can.h" lastModified="14a51339d17">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
-      <source file="..\..\..\cmsis_lib\include\stm32f4xx_can.h" lastModified="14a51339d17">
+      <source file="..\..\..\cmsis_lib\include\stm32f4xx_pwr.h" lastModified="14a512fcdb5">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
       </source>
       <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="14a512f4d9e">
@@ -346,6 +375,24 @@
       <source file="..\..\..\stm32f4_config\usb\usb_conf\usb_bsp.h" lastModified="1485e794940">
          <include file="..\..\..\stm32f4_config\usb\usb_lib\otg\usb_core.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+      </source>
+      <source file="..\..\..\main.c" lastModified="14a85c4b083">
+         <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
+         <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
+         <include file="..\..\..\stm32f4_config\config_adc.h"/>
+         <include file="..\..\..\stm32f4_config\config_encoder.h"/>
+         <include file="..\..\..\stm32f4_config\config_port.h"/>
+         <include file="..\..\..\stm32f4_config\config_pwm.h"/>
+         <include file="..\..\..\stm32f4_config\config_systick.h"/>
+         <include file="..\..\..\stm32f4_config\config_usart.h"/>
+         <include file="..\..\..\stm32f4_config\name_converter.h"/>
+         <include file="..\..\..\stm32f4_config\usb\config_usb.h"/>
+         <include file="..\..\..\can.h"/>
+         <include file="..\..\..\define.h"/>
+         <include file="..\..\..\motor_define.h"/>
+         <include file="..\..\..\..\3axes\my_standard_io.h"/>
+         <include file="..\..\..\transmit.h"/>
+         <include file="..\..\..\..\3axes\receive.h"/>
       </source>
       <source file="..\..\..\cmsis_lib\source\stm32f4xx_sdio.c" lastModified="14a5130e588">
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_sdio.h"/>
@@ -367,14 +414,17 @@
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_adc.h"/>
          <include file="..\..\..\cmsis_lib\include\stm32f4xx_rcc.h"/>
       </source>
-      <source file="..\..\..\stm32f4_config\config_port.h" lastModified="149e29fef1b">
+      <source file="..\..\..\stm32f4_config\config_port.h" lastModified="14a85b6f644">
          <include file="..\..\..\cmsis_boot\stm32f4xx.h"/>
          <include file="..\..\..\cmsis_boot\stm32f4xx_conf.h"/>
       </source>
       <source file="..\..\..\..\3axes\my_standard_io.h" lastModified="149d4e60dd8">
       </source>
-      <source file="..\..\..\stm32f4_config\config_port.c" lastModified="149a9ffb560">
+      <source file="..\..\..\typedef.h" lastModified="14a85aa1248">
+      </source>
+      <source file="..\..\..\stm32f4_config\config_port.c" lastModified="14a85a8a772">
          <include file="..\..\..\stm32f4_config\config_port.h"/>
+         <include file="..\..\..\define.h"/>
       </source>
       <source file="..\..\..\..\3axes\my_standard_io.c" lastModified="149d6350f4f">
          <include file="..\..\..\..\3axes\my_standard_io.h"/>

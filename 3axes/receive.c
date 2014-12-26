@@ -14,8 +14,9 @@ void receive_att( void )
 {
     char c = '\0';
 
-	g_c = receive_usart3_c();//受信データ
+	c = receive_usart3_c();//受信データ
 
+    receive_order_c( c );
 }
 
 char receive()

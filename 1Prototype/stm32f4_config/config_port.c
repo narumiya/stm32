@@ -1,5 +1,7 @@
 #include "config_port.h"
 
+#include "define.h"
+
 /******************************************************************************
 *	タイトル ： ポートの設定（固定）
 *	  関数名 ： Init_port
@@ -61,3 +63,11 @@ void Init_port(GPIOMode_TypeDef mode,GPIO_TypeDef *port,uint16_t pin,GPIOPuPd_Ty
 	if(mode == GPIO_Mode_OUT)	GPIO_ResetBits(port,pin);			//ポートのリセット
 }
 
+void Set_GPIO_output(GPIO_TypeDef *port, uint16_t pin, unsigned short high_or_low)
+{
+	if(high_or_low == HIGH){
+		GPIO_SetBits(port, pin);
+	}else if(high_or_low == LOW){
+		GPIO_ResetBits(port, pin);
+	}
+}

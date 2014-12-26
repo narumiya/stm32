@@ -1,121 +1,326 @@
-#include "robo_data.h"
-#include "defines.h"
-#include "chata.h"
 
-void move_left_tire( float left_duty )
+#include "motor.h"
+#include "define.h"
+#include "motor_define.h"
+
+#define	MIN_MOTOR_DUTY_PERCENT		5
+#define MAX_MOTOR_DUTY_PERCENT		99
+
+
+
+void Move_left_tire(float l_duty)
 {
-	 if( left_duty == FREE ){
-		GPIO_ResetBits(LEFT_TIRE_CW);
-		GPIO_ResetBits(LEFT_TIRE_CCW);
-		left_duty = 0;
+	static short i = 0;
 
-	}else if( left_duty > 0 ){
-		GPIO_SetBits(LEFT_TIRE_CW);
-		GPIO_ResetBits(LEFT_TIRE_CCW);
-		
-	}else if( left_duty < 0 ){
-		GPIO_ResetBits(LEFT_TIRE_CW);
-		GPIO_SetBits(LEFT_TIRE_CCW);
+	if(fabs(l_duty) > MIN_MOTOR_DUTY_PERCENT){
+		if(l_duty < 0){
+			if(i != 0){
+				Deadtime_left_tire();
+				i = 0;
+			}else{
+				l_duty *= (-1);
+				Set_GPIO_output(LEFT_TIRE_CW, LOW);
+				Set_GPIO_output(LEFT_TIRE_CCW, HIGH);
+				i = 0;
+			}
+		}else if(l_duty == BRAKE){
+			if(i != 1){
+				Deadtime_left_tire();
+				i = 1;
+			}else{
+				l_duty = MAX_MOTOR_DUTY_PERCENT;
+				Set_GPIO_output(LEFT_TIRE_CW, HIGH);
+				Set_GPIO_output(LEFT_TIRE_CCW, HIGH);
+				i = 1;
+			}
+		}else{
+			if(i != 2){
+				Deadtime_left_tire();
+				i = 2;
+			}else{
+				Set_GPIO_output(GPIOD, GPIO_Pin_15, HIGH);
+				Set_GPIO_output(LEFT_TIRE_CW, HIGH);
+				Set_GPIO_output(LEFT_TIRE_CCW, LOW);
+				i = 2;
+			}
+		}
 
-	}else if(left_duty == 0){
-		GPIO_ResetBits(LEFT_TIRE_CW);
-		GPIO_ResetBits(LEFT_TIRE_CCW);
+		l_duty = Limit_ul(MAX_MOTOR_DUTY_PERCENT , 0, l_duty);
+
+		Set_duty(LEFT_TIRE_PWM, l_duty / 100);
+
+	}else{
+		Deadtime_left_tire();
 	}
-	
-	left_duty = Limit_ul( MAX_DUTY , 0 , fabs(left_duty) );
-	Set_duty(LEFT_TIRE_PWM, ( (100 - left_duty ) / 100 ) );
 }
 
-void move_right_tire( float right_duty )
-{		
-	 if( right_duty == FREE ){
-		GPIO_ResetBits(RIGHT_TIRE_CW);
-		GPIO_ResetBits(RIGHT_TIRE_CCW);
-		right_duty = 0;
-
-	}else if( right_duty > 0 ){
-		GPIO_SetBits(RIGHT_TIRE_CW);
-		GPIO_ResetBits(RIGHT_TIRE_CCW);
-
-	}else if( right_duty < 0 ){
-		GPIO_ResetBits(RIGHT_TIRE_CW);
-		GPIO_SetBits(RIGHT_TIRE_CCW);
-		right_duty *= ( -1 );
-
-	}else if(right_duty == 0){
-		GPIO_ResetBits(RIGHT_TIRE_CW);
-		GPIO_ResetBits(RIGHT_TIRE_CCW);
-	}
-	
-	right_duty = Limit_ul( MAX_DUTY , 0 ,fabs( right_duty) );
-	Set_duty(RIGHT_TIRE_PWM, ( (100 - right_duty) / 100 ) );
-}
-
-void move_back_tire( float back_duty )
-{		
-	 if( back_duty == FREE ){
-		GPIO_ResetBits(BACK_TIRE_CW);
-		GPIO_ResetBits(BACK_TIRE_CCW);
-		back_duty = 0;
-
-	}else if( back_duty > 0 ){
-		GPIO_SetBits(BACK_TIRE_CW);
-		GPIO_ResetBits(BACK_TIRE_CCW);
-		
-	}else if( back_duty < 0 ){
-		GPIO_ResetBits(BACK_TIRE_CW);
-		GPIO_SetBits(BACK_TIRE_CCW);
-		back_duty *= ( -1 );
-
-	}else if(back_duty == 0){
-		GPIO_ResetBits(BACK_TIRE_CW);
-		GPIO_ResetBits(BACK_TIRE_CCW);
-	}
-	
-	back_duty = Limit_ul( MAX_DUTY , 0 , fabs(back_duty) );
-	Set_duty(BACK_TIRE_PWM, ((100 - back_duty) / 100) );
-}
-
-void move_arm(float arm_duty)
+void Move_right_tire(float r_duty)
 {
-	 if( arm_duty == FREE ){
-		GPIO_ResetBits(ARM_PUSH);
-		GPIO_ResetBits(ARM_PULL);
-		arm_duty = 0;
+	static short i = 0;
 
-	}else if( arm_duty > 0 ){
-		GPIO_SetBits(ARM_PUSH);
-		GPIO_ResetBits(ARM_PULL);
+	if(fabs(r_duty) > MIN_MOTOR_DUTY_PERCENT){
+		if(r_duty < 0){
+			if(i != 0){
+				Deadtime_right_tire();
+				i = 0;
+			}else{
+				r_duty *= (-1);
+				Set_GPIO_output(RIGHT_TIRE_CW, LOW);
+				Set_GPIO_output(RIGHT_TIRE_CCW, HIGH);
+				i = 0;
+			}
+		}else if(r_duty == BRAKE){
+			if(i != 1){
+				Deadtime_right_tire();
+				i = 1;
+			}else{
+				r_duty = MAX_MOTOR_DUTY_PERCENT;
+				Set_GPIO_output(RIGHT_TIRE_CW, HIGH);
+				Set_GPIO_output(RIGHT_TIRE_CCW, HIGH);
+				i = 1;
+			}
+		}else{
+			if(i != 2){
+				Deadtime_right_tire();
+				i = 2;
+			}else{
+				Set_GPIO_output(RIGHT_TIRE_CW, HIGH);
+				Set_GPIO_output(RIGHT_TIRE_CCW, LOW);
+				i = 2;
+			}
+		}
 
-	}else if( arm_duty < 0 ){
-		GPIO_ResetBits(ARM_PUSH);
-		GPIO_SetBits(ARM_PULL);
-		arm_duty *= ( -1 );
+		r_duty = Limit_ul(MAX_MOTOR_DUTY_PERCENT , 0, r_duty);
+		Set_duty(RIGHT_TIRE_PWM, (r_duty / 100.0));
+	}else{
+		Deadtime_right_tire();
+	}
+}
 
-	}else if(arm_duty == 0){
-		GPIO_ResetBits(ARM_PUSH);
-		GPIO_ResetBits(ARM_PULL);
+void Move_back_tire(float b_duty)
+{
+	static short i = 0;
+
+	if(fabs(b_duty) > MIN_MOTOR_DUTY_PERCENT){
+		if(b_duty < 0){
+			if(i != 0){
+				Deadtime_back_tire();
+				i = 0;
+			}else{
+				b_duty *= (-1);
+				Set_GPIO_output(BACK_TIRE_CW, LOW);
+				Set_GPIO_output(BACK_TIRE_CCW, HIGH);
+				i = 0;
+			}
+		}else if(b_duty == BRAKE){
+			if(i != 1){
+				Deadtime_back_tire();
+				i = 1;
+			}else{
+				b_duty = MAX_MOTOR_DUTY_PERCENT;
+				Set_GPIO_output(BACK_TIRE_CW, HIGH);
+				Set_GPIO_output(BACK_TIRE_CCW, HIGH);
+				i = 1;
+			}
+		}else{
+			if(i != 2){
+				Deadtime_back_tire();
+				i = 2;
+			}else{
+				Set_GPIO_output(BACK_TIRE_CW, HIGH);
+				Set_GPIO_output(BACK_TIRE_CCW, LOW);
+				i = 2;
+			}
+		}
+
+		b_duty = Limit_ul(MAX_MOTOR_DUTY_PERCENT , 0, b_duty);
+		Set_duty(BACK_TIRE_PWM, (b_duty / 100.0));
+
+	}else{
+		Deadtime_back_tire();
+	}
+}
+
+void Move_arm(float arm_duty)
+{
+
+	static short i = 0;
+
+	if(fabs(arm_duty) > MIN_MOTOR_DUTY_PERCENT){
+		if(arm_duty < 0){
+			if(i != 0){
+				Deadtime_arm();
+				i = 0;
+			}else{
+				arm_duty *= (-1);
+				Set_GPIO_output(ARM_PUSH, LOW);
+				Set_GPIO_output(ARM_PULL, HIGH);
+				i = 0;
+			}
+		}else if(arm_duty == BRAKE){
+			if(i != 1){
+				Deadtime_arm();
+				i = 1;
+			}else{
+				arm_duty = MAX_MOTOR_DUTY_PERCENT;
+				Set_GPIO_output(ARM_PUSH, HIGH);
+				Set_GPIO_output(ARM_PULL, HIGH);
+				i = 1;
+			}
+		}else{
+			if(i != 2){
+				Deadtime_arm();
+				i = 2;
+			}else{
+				Set_GPIO_output(ARM_PUSH, HIGH);
+				Set_GPIO_output(ARM_PULL, LOW);
+				i = 2;
+			}
+		}
+
+		arm_duty = Limit_ul(MAX_MOTOR_DUTY_PERCENT , 0, arm_duty);
+		Set_duty(ARM_PWM, (arm_duty / 100.0));
+	}else{
+		Deadtime_arm();
+	}
+}
+
+void Move(float l_duty, float r_duty, float b_duty)
+{
+	Move_left_tire(l_duty);
+	Move_right_tire(r_duty);
+	Move_back_tire(b_duty);
+}
+
+void Deadtime_left_tire(void)
+{
+	Set_GPIO_output(LEFT_TIRE_CW, LOW);
+	Set_GPIO_output(LEFT_TIRE_CCW, LOW);
+	Set_duty(LEFT_TIRE_PWM, 0.0);
+}
+void Deadtime_right_tire(void)
+{
+	Set_GPIO_output(RIGHT_TIRE_CW, LOW);
+	Set_GPIO_output(RIGHT_TIRE_CCW, LOW);
+	Set_duty(RIGHT_TIRE_PWM, 0.0);
+}
+void Deadtime_back_tire(void)
+{
+	Set_GPIO_output(BACK_TIRE_CW, LOW);
+	Set_GPIO_output(BACK_TIRE_CCW, LOW);
+	Set_duty(BACK_TIRE_PWM, 0.0);
+}
+void Deadtime_arm(void)
+{
+	Set_GPIO_output(ARM_PUSH, LOW);
+	Set_GPIO_output(ARM_PULL, LOW);
+	Set_duty(ARM_PWM, 0.0);
+}
+void Deadtime_tire(void)
+{
+	Deadtime_left_tire();
+	Deadtime_right_tire();
+	Deadtime_back_tire();
+}
+void Deadtime_all(void)
+{
+	Deadtime_tire();
+	Deadtime_arm();
+}
+
+float Convert_duty(float duty)
+{
+	float convert_duty = 0.0;
+	convert_duty = 100.0 - duty;
+	return (convert_duty);
+}
+
+float get_motor_output_x(float motor_output, float degree)
+{
+	float motor_output_x = 0.0,
+		 degree_reverse = 0.0;
+
+	if(motor_output < 0.0){
+		degree_reverse = 180.0;
+	}
+	motor_output_x = fabs(motor_output) * cos(Convert_to_radian(degree + degree_reverse));
+
+	return (motor_output_x);
+}
+
+float get_motor_output_y(float motor_output, float degree)
+{
+	float motor_output_y = 0.0,
+		 degree_reverse = 0.0;
+
+	if(motor_output < 0.0){
+		degree_reverse = 180.0;
+	}
+	motor_output_y = fabs(motor_output) * sin(Convert_to_radian(degree + degree_reverse));
+
+	return (motor_output_y);
+}
+
+float get_motor_output_l(float motor_output_x, float motor_output_y, float degree_now)
+{
+	float 	motor_output_l = 0.0,
+			degree_reverse_x = 0.0,
+			degree_reverse_y = 0.0;
+
+	if(motor_output_x < 0.0){
+		degree_reverse_x = 180.0;
+	}else{
+		degree_reverse_x = 0.0;
+		}
+	if(motor_output_y < 0.0){
+		degree_reverse_y = 180.0;
+	}else{
+		degree_reverse_y = 0.0;
 	}
 
-	arm_duty = Limit_ul( MAX_DUTY , 0 , fabs(arm_duty) );
-	Set_duty(ARM_PWM, ((100 - arm_duty) / 100) );
+	motor_output_l = fabs(motor_output_x) * cos(Convert_to_radian(degree_now + 150.0 + degree_reverse_x));
+	motor_output_l += fabs(motor_output_y) * sin(Convert_to_radian(degree_now + 150.0 + degree_reverse_y));
+	return(motor_output_l);
 }
-
-void move( float left_duty , float right_duty , float back_duty )
+float get_motor_output_r(float motor_output_x, float motor_output_y, float degree_now)
 {
-	move_left_tire(left_duty);
-	move_right_tire(right_duty);
-	move_back_tire(back_duty);
+	float 	motor_output_r = 0.0,
+			degree_reverse_x = 0.0,
+			degree_reverse_y = 0.0;
+
+	if(motor_output_x < 0.0){
+		degree_reverse_x = 180.0;
+	}else{
+		degree_reverse_x = 0.0;
+		}
+	if(motor_output_y < 0.0){
+		degree_reverse_y = 180.0;
+	}else{
+		degree_reverse_y = 0.0;
+	}
+
+	motor_output_r = fabs(motor_output_x) * cos(Convert_to_radian(degree_now + 30.0 + degree_reverse_x));
+	motor_output_r += fabs(motor_output_y) * sin(Convert_to_radian(degree_now + 30.0 + degree_reverse_y));
+	return(motor_output_r);
 }
-
-void deadtime(void)
+float get_motor_output_b(float motor_output_x, float motor_output_y, float degree_now)
 {
-	GPIO_ResetBits(BACK_TIRE_CW);
-	GPIO_ResetBits(BACK_TIRE_CCW);
-	GPIO_ResetBits(RIGHT_TIRE_CW);
-	GPIO_ResetBits(RIGHT_TIRE_CCW);
-	GPIO_ResetBits(LEFT_TIRE_CW);
-	GPIO_ResetBits(LEFT_TIRE_CCW);
-	GPIO_ResetBits(ARM_PUSH);
-	GPIO_ResetBits(ARM_PULL);
+	float 	motor_output_b = 0.0,
+			degree_reverse_x = 0.0,
+			degree_reverse_y = 0.0;
+
+	if(motor_output_x < 0.0){
+		degree_reverse_x = 180.0;
+	}else{
+		degree_reverse_x = 0.0;
+		}
+	if(motor_output_y < 0.0){
+		degree_reverse_y = 180.0;
+	}else{
+		degree_reverse_y = 0.0;
+	}
+
+	motor_output_b = fabs(motor_output_x) * cos(Convert_to_radian(degree_now - 90.0 + degree_reverse_x));
+	motor_output_b += fabs(motor_output_y) * sin(Convert_to_radian(degree_now - 90.0 + degree_reverse_y));
+	return(motor_output_b);
 }
