@@ -19,11 +19,6 @@ void receive_att( void )
     receive_order_c( c );
 }
 
-char receive()
-{
-	return g_c;
-}
-
 //解析した命令に応じて数値をグローバル変数に格納する関数	下の関数の続きみたいな
 void receive_order_depot( int target_box , char *storage_str , int minus_flag , int after_point_count , int large_size_flag )
 {

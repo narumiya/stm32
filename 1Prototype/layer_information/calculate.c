@@ -11,7 +11,7 @@
 *	  作成者 ： 坂下文彦
 *	  作成日 ： 2014/11/10
 ******************************************************************************/
-float Limit_ul(float upper, float lower, float figure)
+float limit_ul(float upper, float lower, float figure)
 {
 	if(figure > upper){
 		return (upper);
@@ -29,7 +29,7 @@ float Limit_ul(float upper, float lower, float figure)
 *	  作成者 ： 坂下文彦
 *	  作成日 ： 2014/11/10
 ******************************************************************************/
-float Convert_to_degree(float radian)
+float convert_to_degree(float radian)
 {
 	return (radian * 180.0 / M_PI);
 }
@@ -41,7 +41,7 @@ float Convert_to_degree(float radian)
 *	  作成者 ： 坂下文彦
 *	  作成日 ： 2014/11/10
 ******************************************************************************/
-float Convert_to_radian(float degree)
+float convert_to_radian(float degree)
 {
 	return (degree * M_PI / 180.0);
 }
@@ -76,7 +76,7 @@ float get_target_degree(float target_x, float target_y, float x_now, float y_now
 	static float target_degree_old = 0.0;
 	float target_degree = 0.0;
 	if((target_x - x_now != 0.0) || (target_y - y_now != 0.0)){
-		target_degree = Convert_to_degree(atan2(target_y - y_now, target_x - x_now));
+		target_degree = convert_to_degree(atan2(target_y - y_now, target_x - x_now));
 		target_degree_old = target_degree;
 	}else{
 		target_degree = target_degree_old;
@@ -145,9 +145,9 @@ float get_horizontal_distance(float distance, float degree_gap)
 		}
 
 	if(degree_gap > 0){
-		return ((-1)*distance * cos(Convert_to_radian(90-fabs(degree_gap))));//車体の向きに対して水平方向が左
+		return ((-1)*distance * cos(convert_to_radian(90-fabs(degree_gap))));//車体の向きに対して水平方向が左
 	}else{
-		return(distance * cos(Convert_to_radian(90-fabs(degree_gap))));
+		return(distance * cos(convert_to_radian(90-fabs(degree_gap))));
 	}
 }
 float get_vertical_distance(float distance, float degree_gap)
@@ -163,9 +163,9 @@ float get_vertical_distance(float distance, float degree_gap)
 		}
 
 	if(limit_over == OFF){
-		return (distance * sin(Convert_to_radian(90 - fabs(degree_gap))));
+		return (distance * sin(convert_to_radian(90 - fabs(degree_gap))));
 	}else{
-		return((-1)*distance * sin(Convert_to_radian(90 - fabs(degree_gap))));//車体の向きに対して垂直方向が後方
+		return((-1)*distance * sin(convert_to_radian(90 - fabs(degree_gap))));//車体の向きに対して垂直方向が後方
 	}
 }
 float get_horizontal_distance_position(float target_x, float target_y, float x_now, float y_now, float degree_now)
@@ -178,15 +178,15 @@ float get_vertical_distance_position(float target_x, float target_y, float x_now
 }
 
 
-float get_target_degree_struct(Coodinate_t target, Coodinate_t now)
+float get_target_degree_struct(Coordinate_t target, Coordinate_t now)
 {
 	return(get_target_degree(target.x, target.y, now.x, now.y));
 }
-float get_horizontal_distance_struct(Coodinate_t target, Coodinate_t now, float degree)
+float get_horizontal_distance_struct(Coordinate_t target, Coordinate_t now, float degree)
 {
 	return(get_horizontal_distance_position(target.x, target.y, now.x, now.y, degree));
 }
-float get_vertical_distance_struct(Coodinate_t target, Coodinate_t now, float degree)
+float get_vertical_distance_struct(Coordinate_t target, Coordinate_t now, float degree)
 {
 	return(get_vertical_distance_position(target.x, target.y, now.x, now.y, degree));
 }

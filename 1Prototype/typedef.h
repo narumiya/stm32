@@ -5,7 +5,7 @@ typedef struct{
 	float x;
 	float y;
 	float z;
-}Coodinate_t;
+}Coordinate_t;
 
 typedef struct{
 	float degree;
@@ -13,13 +13,13 @@ typedef struct{
 }Angle_t;
 
 typedef struct{
-	Coodinate_t cood;
+	Coordinate_t cood;
 	float abs;
 	float phase;
 }Velocity_t;
 
 typedef struct{
-	Coodinate_t cood;
+	Coordinate_t cood;
 	float abs;
 	float down;
 	float up;
@@ -39,21 +39,23 @@ typedef struct{
 
 typedef struct{
 	Encoder_tire_t enc_cnt;
-	Coodinate_t cood;
-	Coodinate_t arm_c;
-	Coodinate_t camera_u;
-	Coodinate_t camera_t;
+	Coordinate_t coord;
+	Coordinate_t arm_c;
+	Coordinate_t camera_u;
+	Coordinate_t camera_t;
 	Angle_t angle;
 	Angle_t omega;
 	Velocity_t velocity;
 	Velocity_t arm_vel;
 }Robot_information_t;
 
+//ポテンショメータ構造体
 typedef struct{
 	float init_value;
 	float now_value;
 	float length;
-}Potentio_information_t;
+	float degree;
+}Potentio_t;
 
 typedef struct{
 	unsigned short raw;						//チャタリングありのデータ
@@ -84,10 +86,43 @@ typedef struct{
 }Gain_t;
 
 typedef struct{
-	Coodinate_t cood;
+	Coordinate_t coord;
 	Velocity_t velocity;
 	Angle_t angle;
 	Angle_t omega;
 }Target_t;
+
+typedef struct{
+	short LjoyX;
+	short LjoyY;
+	short RjoyX;
+	short RjoyY;
+
+	short robot_LjoyX;
+	short robot_LjoyY;
+	short robot_RjoyX;
+	short robot_RjoyY;
+
+	unsigned short Up;
+	unsigned short Right;
+	unsigned short Down;
+	unsigned short Left;
+	unsigned short Triangle;
+	unsigned short Circle;
+	unsigned short Cross;
+	unsigned short Square;
+	unsigned short Start;
+	unsigned short Select;
+	unsigned short PS;
+	unsigned short AccX;
+	unsigned short AccY;
+	unsigned short L1;
+	unsigned short L2;
+	unsigned short R1;
+	unsigned short R2;
+
+	unsigned short connect;
+	unsigned short error;
+}PS3_Controller_t;
 
 #endif

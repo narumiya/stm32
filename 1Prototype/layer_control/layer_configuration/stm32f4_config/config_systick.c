@@ -3,6 +3,7 @@
 unsigned int 	g_time = 0,
 						g_serial_time = 0,
 						g_debug_time = 0,
+						g_arm_time = 0,
 						g_micro_time = 0;
 
 /******************************************************************************
@@ -18,6 +19,7 @@ void SysTick_Handler(void){
 	g_time ++;
 	g_debug_time ++;
 	g_serial_time ++;
+	g_arm_time ++;
 }
 
 /******************************************************************************
@@ -82,7 +84,10 @@ unsigned int count_time(int i)
 		return (g_micro_time);
 	}else if(i==3){
 		return (g_debug_time);
+	}else if(i==4){
+		return (g_arm_time);
 	}
+
 	return 0;
 }
 
@@ -96,5 +101,7 @@ void reset_count_time(int i)
 		g_micro_time = 0;
 	}else if(i==3){
 		g_debug_time = 0;
+	}else if(i==4){
+		g_arm_time = 0;
 	}
 }
